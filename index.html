@@ -5,15 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Transparansi Dana Ziaroh KKI</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root { --bg-main: #f8fafc; --bg-card: #ffffff; --text-main: #1e293b; --text-muted: #64748b; --border-color: #e2e8f0; --accent: #10b981; }
+    :root { 
+      --bg-main: #f8fafc; 
+      --bg-card: #ffffff; 
+      --text-main: #1e293b; 
+      --text-muted: #64748b; 
+      --border-color: #e2e8f0; 
+      --accent: #10b981; 
+    }
     body { font-family: 'Inter', sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 0; }
     
-    .clean-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .clean-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
     
-    /* Scrollbar Elegan */
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -22,11 +28,8 @@
     .search-box { background-color: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 12px; padding: 12px 16px; transition: all 0.2s ease; font-size: 0.95rem; }
     .search-box:focus { background-color: #fff; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); outline: none; }
     
-    /* =========================================================
-       STYLE DASAR TABEL (GLOBAL)
-       ========================================================= */
     .table-container { background-color: var(--bg-card); border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow-x: auto; }
-    .table { margin-bottom: 0; color: var(--text-main); font-size: 0.9rem; width: 100%; } /* min-width 1000px DIHAPUS DARI SINI */
+    .table { margin-bottom: 0; color: var(--text-main); font-size: 0.9rem; width: 100%; } 
     
     .table thead { background-color: #f1f5f9; }
     .table th { color: #475569; font-weight: 700; padding: 16px; white-space: nowrap; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; border-bottom: 2px solid #cbd5e1; }
@@ -37,16 +40,12 @@
     .table tbody tr:nth-child(even) { background-color: #f8fafc; }
     .table tbody tr:hover { background-color: #f1f5f9; transition: background-color 0.2s ease; }
     
-    /* --- BADGE STATUS MODERN --- */
     .badge-lunas { background-color: #ecfdf5; color: #059669; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; border: 1px solid #a7f3d0; display: inline-block; }
     .badge-belum { background-color: #fef2f2; color: #dc2626; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; border: 1px solid #fecaca; display: inline-block; }
-    .badge-dp { background-color: #eff6ff; color: #2563eb; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; border: 1px solid #bfdbfe; display: inline-block; }
     .badge-cicilan { background-color: #fffbeb; color: #d97706; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; border: 1px solid #fde68a; display: inline-block; }
 
-    /* --- RIWAYAT PEMBAYARAN BERBENTUK MINI-CARD --- */
     .riwayat-wrapper { display: flex; flex-direction: column; gap: 8px; min-width: 260px; }
-    .riwayat-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); transition: border-color 0.2s ease; }
-    .riwayat-box:hover { border-color: #cbd5e1; }
+    .riwayat-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
     .riwayat-date { font-size: 0.7rem; color: #64748b; font-weight: 700; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
     .riwayat-detail { display: flex; justify-content: space-between; align-items: center; }
     .riwayat-nominal { font-size: 0.9rem; font-weight: 800; color: #059669; }
@@ -57,131 +56,75 @@
     .toast-icon-wrapper { flex-shrink: 0; width: 48px; height: 48px; background: linear-gradient(135deg, #34d399 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.25rem; }
     .btn-close-toast { flex-shrink: 0; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; }
 
-    /* =========================================================
-       KHUSUS LAPTOP / DESKTOP (Layar Lebar)
-       ========================================================= */
+    .btn-refresh { background-color: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-muted); border-radius: 12px; padding: 12px 18px; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease; }
+    .btn-refresh:hover { background-color: #fff; border-color: var(--accent); color: var(--accent); }
+
     @media (min-width: 769px) {
-      .table { min-width: 1000px; } /* Aturan 1000px dipindah ke sini agar aman */
+      .table { min-width: 1000px; } 
     }
 
-    /* =========================================================
-       LAYOUT MAGIS UNTUK HP (TRANSFORMASI KARTU SUPER RAPI) 
-       ========================================================= */
     @media (max-width: 768px) {
       .clean-card { padding: 16px; }
       .toast-popup { width: calc(100% - 32px); right: 16px; bottom: 16px; padding: 16px; }
-      
       .table-container { background-color: transparent; border: none; box-shadow: none; border-radius: 0; overflow: visible; }
-      
-      /* Reset lebar tabel agar pas di HP */
       .table { min-width: 100% !important; width: 100%; display: block; }
       .table thead { display: none; } 
       .table tbody { display: block; width: 100%; }
-      
       .table tbody tr {
-        display: block;
-        width: 100%;
-        background-color: var(--bg-card) !important;
-        border: 1px solid #e2e8f0;
-        border-radius: 20px; 
-        margin-bottom: 24px;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
-        overflow: hidden;
+        display: block; width: 100%; background-color: var(--bg-card) !important; border: 1px solid #e2e8f0;
+        border-radius: 20px; margin-bottom: 24px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); overflow: hidden;
       }
-      
-      .table td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 14px 20px;
-        border-bottom: 1px solid #e2e8f0; 
-        text-align: right;
-        font-size: 0.95rem;
-        word-break: break-word; /* Mencegah teks panjang menembus layar */
-      }
-      
-      .table td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: #64748b;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        width: 40%;
-        text-align: left;
-        margin-right: 12px;
-        flex-shrink: 0;
-      }
-
-      /* Trik 1: Kolom NO dikecilkan dan digabung ke atas */
-      .table td[data-label="No"] {
-        background-color: #f8fafc;
-        padding-top: 20px;
-        padding-bottom: 2px;
-        border-bottom: none;
-        color: #94a3b8;
-        font-size: 0.8rem;
-        font-weight: 600;
-      }
-      
-      /* Trik 2: NAMA MAHASISWA disulap jadi Header Kartu yang tebal */
-      .table td[data-label="Nama Mahasiswa"] {
-        background-color: #f8fafc;
-        padding-top: 4px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #cbd5e1;
-        font-size: 1.15rem;
-        font-weight: 800;
-        color: #0f172a;
-        justify-content: flex-start;
-        text-align: left;
-      }
+      .table td { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid #e2e8f0; text-align: right; font-size: 0.95rem; }
+      .table td::before { content: attr(data-label); font-weight: 600; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; width: 40%; text-align: left; margin-right: 12px; flex-shrink: 0; }
+      .table td[data-label="No"] { background-color: #f8fafc; padding-top: 18px; padding-bottom: 2px; border-bottom: none; color: #94a3b8; font-size: 0.8rem; font-weight: 600; }
+      .table td[data-label="Nama Mahasiswa"] { background-color: #f8fafc; padding-top: 4px; padding-bottom: 18px; border-bottom: 1px solid #cbd5e1; font-size: 1.15rem; font-weight: 800; color: #0f172a; justify-content: flex-start; text-align: left; }
       .table td[data-label="Nama Mahasiswa"]::before { display: none; }
-      
-      /* Trik 3: Highlight Angka Keuangan */
       .table td[data-label="Dana Masuk"] { font-weight: 700; color: #059669; }
       .table td[data-label="Sisa Kurang"] { font-weight: 700; }
-
-      /* Trik 4: Ruang khusus untuk Riwayat Pembayaran */
-      .table td:last-child {
-        flex-direction: column;
-        align-items: flex-start;
-        background-color: #fcfcfc;
-        padding: 20px;
-      }
-      .table td[data-label="Riwayat Pembayaran"]::before {
-        width: 100%;
-        margin-bottom: 12px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #e2e8f0;
-        color: #475569;
-      }
-
-      /* Hapus shadow riwayat di HP agar tidak terlalu ramai (karena induknya sudah berupa kartu) */
+      .table td:last-child { flex-direction: column; align-items: flex-start; background-color: #fcfcfc; padding: 20px; }
+      .table td[data-label="Riwayat Pembayaran"]::before { width: 100%; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0; color: #475569; }
       .riwayat-wrapper { min-width: 100%; width: 100%; }
-      .riwayat-box { box-shadow: none; border-color: #f1f5f9; width: 100%; }
+      .riwayat-box { width: 100%; }
     }
   </style>
 </head>
 <body>
   <div class="container-fluid px-3 py-4" style="max-width: 1200px; margin: auto;">
     
-    <div class="mb-5 text-center mt-3">
+    <div class="mb-4 text-center mt-2">
       <h2 class="fw-bold mb-2 text-dark">Transparansi Dana Ziaroh Wali 5 KKI</h2>
       <p class="text-muted">Jangan lupa konfirmasi ke panitia setiap melakukan pembayaran!</p>
     </div>
     
-    <div class="clean-card mb-4 p-3">
-      <div class="position-relative">
-        <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #94a3b8;"></i>
-        <input type="text" id="searchInput" class="form-control search-box w-100 ps-5" placeholder="Ketik Nama Mahasiswa atau Angkatan...">
+    <!-- PENCARIAN & TOMBOL REFRESH DATA -->
+    <div class="clean-card mb-4">
+      <div class="d-flex gap-2 flex-wrap flex-md-nowrap">
+        <div class="position-relative flex-grow-1">
+          <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #94a3b8;"></i>
+          <input type="text" id="searchInput" class="form-control search-box w-100 ps-5" placeholder="Ketik Nama Mahasiswa atau Angkatan...">
+        </div>
+        <button id="btnRefresh" class="btn-refresh d-flex align-items-center gap-2" onclick="fetchApiData(true)" title="Perbarui Data Langsung dari Server">
+          <i class="fas fa-sync-alt" id="refreshIcon"></i> <span>Refresh</span>
+        </button>
+      </div>
+      <div id="cacheNotice" class="text-muted small mt-2" style="font-size: 0.75rem; display: none;">
+        <i class="fas fa-bolt text-warning"></i> Data dimuat instan dari cache lokal.
       </div>
     </div>
     
+    <!-- TABEL UTAMA -->
     <div class="table-container">
       <table class="table">
         <thead>
-          <tr><th>No</th><th>Nama Mahasiswa</th><th>Angkatan</th><th>Dana Masuk</th><th>Status</th><th>Sisa Kurang</th><th>Riwayat Pembayaran</th></tr>
+          <tr>
+            <th>No</th>
+            <th>Nama Mahasiswa</th>
+            <th>Angkatan</th>
+            <th>Dana Masuk</th>
+            <th>Status</th>
+            <th>Sisa Kurang</th>
+            <th>Riwayat Pembayaran</th>
+          </tr>
         </thead>
         <tbody id="table-body">
           <tr><td colspan="7" class="text-center text-muted py-5"><div class="spinner-border text-success spinner-border-sm me-2" role="status"></div> Mengambil data dari server...</td></tr>
@@ -190,6 +133,7 @@
     </div>
   </div>
 
+  <!-- TOAST PENGINGAT -->
   <div id="notes-popup" class="toast-popup">
     <div class="d-flex align-items-center">
       <div class="toast-icon-wrapper me-3"><i class="fas fa-bell"></i></div>
@@ -202,14 +146,19 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTpLnbz3TE6X3WaN0PrLtHaHH50XDkTHnW8sGEZQoK7l2CYgFxJNg1nxmI53WJOlJ-OA/exec";
+    // URL API Google Apps Script
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTpLnbz3TE6X3WaN0PrLtHaHH50XDkTHnW8sGEZQoK7l2CYgFxJNg1nxml53WJOlJ-OA/exec";
+
+    // KONFIGURASI CLIENT-SIDE CACHE
+    const CACHE_KEY = "ziarah_peserta_cache";
+    const CACHE_EXPIRY_MS = 3 * 60 * 1000; // Cache berlaku selama 3 menit
 
     const formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka || 0);
     
     const getBadge = (status) => {
-      if(status === 'LUNAS') return '<span class="badge-lunas">LUNAS</span>';
-      if(status === 'DP') return '<span class="badge-dp">DP</span>';
-      if(status === 'CICILAN') return '<span class="badge-cicilan">CICILAN</span>';
+      let s = status ? status.toString().toUpperCase() : '';
+      if(s === 'LUNAS') return '<span class="badge-lunas">LUNAS</span>';
+      if(s === 'CICILAN') return '<span class="badge-cicilan">CICILAN</span>';
       return '<span class="badge-belum">BELUM BAYAR</span>';
     };
 
@@ -234,21 +183,74 @@
 
     let globalData = [];
 
-    async function fetchApiData() {
+    // FUNGSI FETCH CERDAS DENGAN CACHING SESSIONSTORAGE
+    async function fetchApiData(forceRefresh = false) {
+      const refreshIcon = document.getElementById('refreshIcon');
+      const cacheNotice = document.getElementById('cacheNotice');
+      
+      if(refreshIcon) refreshIcon.classList.add('fa-spin');
+
+      // 1. Cek Data Cache di sessionStorage jika bukan paksa refresh
+      if (!forceRefresh) {
+        try {
+          const cachedItem = sessionStorage.getItem(CACHE_KEY);
+          if (cachedItem) {
+            const parsedCache = JSON.parse(cachedItem);
+            const isExpired = (Date.now() - parsedCache.timestamp) > CACHE_EXPIRY_MS;
+
+            if (!isExpired && parsedCache.data && parsedCache.data.length > 0) {
+              globalData = parsedCache.data;
+              renderTablePeserta(globalData);
+              if (cacheNotice) cacheNotice.style.display = 'block';
+              if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+              setTimeout(() => { document.getElementById('notes-popup').classList.add('show'); }, 1000);
+              return; // Selesai instan dari cache
+            }
+          }
+        } catch (e) {
+          console.warn("Gagal membaca cache:", e);
+        }
+      }
+
+      // 2. Jika cache tidak ada / kedaluwarsa / ditekan tombol refresh, panggil Server
+      if (cacheNotice) cacheNotice.style.display = 'none';
+      
       try {
         const response = await fetch(APPS_SCRIPT_URL + "?api=true");
-        const data = await response.json();
-        globalData = data.peserta;
+        const resData = await response.json();
+        
+        globalData = Array.isArray(resData) ? resData : (resData.peserta ? resData.peserta : []);
+        
+        // Simpan respons terbaru ke sessionStorage
+        try {
+          sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+            timestamp: Date.now(),
+            data: globalData
+          }));
+        } catch (e) {
+          console.warn("Gagal menyimpan cache:", e);
+        }
+
         renderTablePeserta(globalData);
         setTimeout(() => { document.getElementById('notes-popup').classList.add('show'); }, 1000);
       } catch (error) {
-        document.getElementById('table-body').innerHTML = `<tr><td colspan="7" class="text-center text-danger py-5">Gagal terhubung ke Database. Silakan refresh halaman.</td></tr>`;
+        console.error(error);
+        document.getElementById('table-body').innerHTML = `
+          <tr>
+            <td colspan="7" class="text-center text-danger py-5">
+              <i class="fas fa-exclamation-triangle mb-2" style="font-size: 1.5rem;"></i><br>
+              Gagal terhubung ke Database. Silakan klik tombol <b>Refresh</b> di atas.
+            </td>
+          </tr>`;
+      } finally {
+        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
       }
     }
 
     function renderTablePeserta(dataArr) {
-      const tbody = document.getElementById('table-body'); tbody.innerHTML = '';
-      if(dataArr.length === 0) return tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-5">Belum ada data peserta.</td></tr>`;
+      const tbody = document.getElementById('table-body'); 
+      tbody.innerHTML = '';
+      if(dataArr.length === 0) return tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-5">Data peserta tidak ditemukan.</td></tr>`;
       
       dataArr.forEach((p, i) => {
         tbody.insertAdjacentHTML('beforeend', `<tr>
@@ -263,12 +265,16 @@
       });
     }
 
+    // PENCARIAN REALTIME (Menggunakan Array Lokal yang Sudah di-Cache)
     document.getElementById('searchInput').addEventListener('input', e => {
       let kw = e.target.value.toLowerCase();
-      renderTablePeserta(globalData.filter(p => p['Nama Mahasiswa'].toLowerCase().includes(kw) || p.Angkatan.toString().toLowerCase().includes(kw)));
+      renderTablePeserta(globalData.filter(p => 
+        p['Nama Mahasiswa'].toLowerCase().includes(kw) || 
+        p.Angkatan.toString().toLowerCase().includes(kw)
+      ));
     });
 
-    window.onload = fetchApiData;
+    window.onload = () => fetchApiData(false);
   </script>
 </body>
 </html>
