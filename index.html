@@ -10,92 +10,96 @@
     :root {
       color-scheme: light dark;
 
-      /* --- Atmosphere / base --- */
-      --bg: #f1f2f5;
-      --bg-blob-1: rgba(5, 150, 105, 0.07);
-      --bg-blob-2: rgba(100, 116, 139, 0.11);
-      --bg-blob-3: rgba(59, 130, 246, 0.05);
+      /* --- Atmosphere / base : bold enough that the blur has real color to bend --- */
+      --bg: #eef1f6;
+      --bg-blob-1: rgba(16, 185, 129, 0.30);
+      --bg-blob-2: rgba(56, 130, 246, 0.24);
+      --bg-blob-3: rgba(217, 119, 6, 0.16);
 
       /* --- Ink / text --- */
       --ink: #1c1c1e;
       --ink-soft: rgba(28, 28, 30, 0.62);
       --ink-faint: rgba(28, 28, 30, 0.38);
 
-      /* --- Glass material --- */
-      --glass: rgba(255, 255, 255, 0.55);
-      --glass-strong: rgba(255, 255, 255, 0.75);
-      --glass-edge: rgba(255, 255, 255, 0.85);
-      --glass-edge-soft: rgba(15, 23, 42, 0.07);
-      --glass-shine: 0.55;
+      /* --- Glass material : much more transparent + brighter edge lighting --- */
+      --glass: rgba(255, 255, 255, 0.34);
+      --glass-strong: rgba(255, 255, 255, 0.52);
+      --glass-edge: rgba(255, 255, 255, 0.95);
+      --glass-edge-soft: rgba(15, 23, 42, 0.09);
+      --glass-shine: 0.8;
       --glass-grain: 0.05;
-      --scrim: rgba(15, 23, 42, 0.35);
+      --glass-edge-top: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      --glass-edge-bottom: inset 0 -1px 0 rgba(15, 23, 42, 0.05);
+      --scrim: rgba(15, 23, 42, 0.4);
 
       /* --- Recessed fields / chips --- */
-      --field-fill: rgba(120, 120, 128, 0.09);
-      --field-fill-focus: rgba(255, 255, 255, 0.95);
-      --chip-fill: rgba(15, 23, 42, 0.045);
+      --field-fill: rgba(120, 120, 128, 0.1);
+      --field-fill-focus: rgba(255, 255, 255, 0.96);
+      --chip-fill: rgba(15, 23, 42, 0.05);
 
-      /* --- Accents (brand hues kept, tuned per theme) --- */
+      /* --- Accents --- */
       --emerald: #059669;
-      --emerald-soft: rgba(5, 150, 105, 0.12);
-      --emerald-line: rgba(5, 150, 105, 0.35);
+      --emerald-soft: rgba(5, 150, 105, 0.14);
+      --emerald-line: rgba(5, 150, 105, 0.4);
       --amber: #d97706;
-      --amber-soft: rgba(217, 119, 6, 0.12);
-      --amber-line: rgba(217, 119, 6, 0.35);
+      --amber-soft: rgba(217, 119, 6, 0.14);
+      --amber-line: rgba(217, 119, 6, 0.4);
       --rose: #e11d48;
-      --rose-soft: rgba(225, 29, 72, 0.12);
-      --rose-line: rgba(225, 29, 72, 0.35);
+      --rose-soft: rgba(225, 29, 72, 0.14);
+      --rose-line: rgba(225, 29, 72, 0.4);
       --star: #f59e0b;
 
       /* --- Shadows --- */
-      --shadow-card: 0 1px 1px rgba(15, 23, 42, 0.03), 0 12px 30px -10px rgba(15, 23, 42, 0.16);
-      --shadow-pop: 0 24px 60px -12px rgba(15, 23, 42, 0.28);
-      --shadow-dock: 0 12px 34px -8px rgba(15, 23, 42, 0.22);
+      --shadow-card: 0 1px 1px rgba(15, 23, 42, 0.04), 0 16px 40px -12px rgba(15, 23, 42, 0.24);
+      --shadow-pop: 0 28px 70px -14px rgba(15, 23, 42, 0.34);
+      --shadow-dock: 0 16px 40px -8px rgba(15, 23, 42, 0.28);
 
-      /* --- Radii --- */
-      --r-sm: 12px;
-      --r-md: 16px;
-      --r-lg: 22px;
-      --r-xl: 26px;
+      /* --- Radii : bigger, closer to Apple's continuous-corner feel --- */
+      --r-sm: 13px;
+      --r-md: 18px;
+      --r-lg: 26px;
+      --r-xl: 30px;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #0a0a0c;
-        --bg-blob-1: rgba(16, 185, 129, 0.10);
-        --bg-blob-2: rgba(255, 255, 255, 0.035);
-        --bg-blob-3: rgba(56, 130, 246, 0.08);
+        --bg: #050506;
+        --bg-blob-1: rgba(16, 185, 129, 0.24);
+        --bg-blob-2: rgba(56, 130, 246, 0.2);
+        --bg-blob-3: rgba(217, 119, 6, 0.14);
 
         --ink: #f5f5f7;
         --ink-soft: rgba(245, 245, 247, 0.64);
         --ink-faint: rgba(245, 245, 247, 0.4);
 
-        --glass: rgba(44, 44, 48, 0.55);
-        --glass-strong: rgba(44, 44, 48, 0.78);
-        --glass-edge: rgba(255, 255, 255, 0.14);
-        --glass-edge-soft: rgba(255, 255, 255, 0.08);
-        --glass-shine: 0.16;
-        --glass-grain: 0.07;
-        --scrim: rgba(0, 0, 0, 0.55);
+        --glass: rgba(40, 40, 45, 0.4);
+        --glass-strong: rgba(46, 46, 51, 0.62);
+        --glass-edge: rgba(255, 255, 255, 0.18);
+        --glass-edge-soft: rgba(255, 255, 255, 0.1);
+        --glass-shine: 0.3;
+        --glass-grain: 0.08;
+        --glass-edge-top: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+        --glass-edge-bottom: inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+        --scrim: rgba(0, 0, 0, 0.62);
 
-        --field-fill: rgba(120, 120, 128, 0.18);
-        --field-fill-focus: rgba(60, 60, 64, 0.92);
-        --chip-fill: rgba(255, 255, 255, 0.07);
+        --field-fill: rgba(140, 140, 148, 0.2);
+        --field-fill-focus: rgba(64, 64, 70, 0.92);
+        --chip-fill: rgba(255, 255, 255, 0.08);
 
         --emerald: #34d399;
-        --emerald-soft: rgba(52, 211, 153, 0.16);
-        --emerald-line: rgba(52, 211, 153, 0.4);
+        --emerald-soft: rgba(52, 211, 153, 0.18);
+        --emerald-line: rgba(52, 211, 153, 0.45);
         --amber: #fbbf24;
-        --amber-soft: rgba(251, 191, 36, 0.16);
-        --amber-line: rgba(251, 191, 36, 0.4);
+        --amber-soft: rgba(251, 191, 36, 0.18);
+        --amber-line: rgba(251, 191, 36, 0.45);
         --rose: #fb7185;
-        --rose-soft: rgba(251, 113, 133, 0.16);
-        --rose-line: rgba(251, 113, 133, 0.4);
+        --rose-soft: rgba(251, 113, 133, 0.18);
+        --rose-line: rgba(251, 113, 133, 0.45);
         --star: #fbbf24;
 
-        --shadow-card: 0 1px 1px rgba(0, 0, 0, 0.3), 0 14px 34px -10px rgba(0, 0, 0, 0.55);
-        --shadow-pop: 0 24px 60px -12px rgba(0, 0, 0, 0.65);
-        --shadow-dock: 0 14px 38px -8px rgba(0, 0, 0, 0.6);
+        --shadow-card: 0 1px 1px rgba(0, 0, 0, 0.35), 0 18px 44px -12px rgba(0, 0, 0, 0.65);
+        --shadow-pop: 0 28px 70px -14px rgba(0, 0, 0, 0.75);
+        --shadow-dock: 0 18px 44px -8px rgba(0, 0, 0, 0.7);
       }
     }
 
@@ -115,21 +119,28 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       position: relative;
+      overflow-x: hidden;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Atmosphere behind everything -- gives the glass something real to refract */
+    /* Atmosphere behind everything -- bold, saturated, and slowly alive, so the
+       glass surfaces above genuinely have color and light to bend and refract. */
     body::before {
       content: '';
       position: fixed;
-      inset: 0;
+      inset: -10%;
       z-index: -1;
       background:
-        radial-gradient(38vmax 38vmax at 10% 6%, var(--bg-blob-1), transparent 60%),
-        radial-gradient(42vmax 42vmax at 94% 2%, var(--bg-blob-2), transparent 60%),
-        radial-gradient(46vmax 46vmax at 50% 108%, var(--bg-blob-3), transparent 60%),
+        radial-gradient(36vmax 36vmax at 12% 8%, var(--bg-blob-1), transparent 62%),
+        radial-gradient(40vmax 40vmax at 92% 6%, var(--bg-blob-2), transparent 60%),
+        radial-gradient(44vmax 44vmax at 46% 100%, var(--bg-blob-3), transparent 60%),
         var(--bg);
       pointer-events: none;
+      animation: drift 46s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-2.5%, 2%, 0) scale(1.05); }
     }
 
     ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -165,16 +176,22 @@
 
     /* ===================================================
        LIQUID GLASS MATERIAL (signature element)
-       Applied only to "floating" surfaces: gate card, search
-       panel, participant cards, dock, toast. Recessed fields
-       (finance box, riwayat rows, chips) stay matte on purpose
-       so the glass reads as an actual raised layer, not a
-       blanket filter over everything.
+       Real refraction, not a flat tint: heavy blur + saturate
+       lets the colorful atmosphere bleed through, a specular
+       highlight that follows the pointer/finger (see script
+       at the end of body) simulates light catching curved
+       glass, a baked-in grain breaks up the flatness, and a
+       bright top edge + soft dark bottom edge fake glass
+       thickness. Recessed fields (finance box, riwayat rows,
+       chips) stay matte so the glass reads as an actual
+       raised layer, not a blanket filter over everything.
        =================================================== */
     .gate-card, .search-panel, .participant-card, .clean-dock, .toast-alert {
       position: relative;
       isolation: isolate;
       overflow: hidden;
+      --mx: 25%;
+      --my: -10%;
     }
     .gate-card::before, .search-panel::before, .participant-card::before,
     .clean-dock::before, .toast-alert::before {
@@ -183,12 +200,13 @@
       inset: 0;
       border-radius: inherit;
       background:
-        radial-gradient(130% 70% at 18% -14%, rgba(255, 255, 255, var(--glass-shine)), transparent 55%),
+        radial-gradient(150% 100% at var(--mx) var(--my), rgba(255, 255, 255, var(--glass-shine)), transparent 58%),
+        radial-gradient(120% 60% at 100% 120%, rgba(0, 0, 0, 0.07), transparent 62%),
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: cover, 140px 140px;
-      opacity: 1;
+      background-size: auto, auto, 140px 140px;
       mix-blend-mode: overlay;
       pointer-events: none;
+      transition: background 0.15s ease-out;
       z-index: 1;
     }
 
@@ -199,8 +217,8 @@
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: var(--scrim);
-      backdrop-filter: blur(24px) saturate(160%);
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
       z-index: 99999;
       display: flex;
       align-items: center;
@@ -210,15 +228,15 @@
     }
     .gate-card {
       background: var(--glass-strong);
-      backdrop-filter: blur(30px) saturate(180%);
-      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      backdrop-filter: blur(38px) saturate(220%);
+      -webkit-backdrop-filter: blur(38px) saturate(220%);
       border: 1px solid var(--glass-edge);
       border-radius: var(--r-xl);
       padding: 36px 28px;
       width: 100%;
       max-width: 360px;
       text-align: center;
-      box-shadow: var(--shadow-pop);
+      box-shadow: var(--glass-edge-top), var(--glass-edge-bottom), var(--shadow-pop);
     }
     .gate-icon {
       width: 56px;
@@ -289,6 +307,8 @@
     }
     .badge-subtle {
       background: var(--chip-fill);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       color: var(--ink-soft);
       padding: 4px 12px;
       border-radius: 20px;
@@ -300,12 +320,12 @@
     .top-hero h3 { letter-spacing: -0.03em !important; }
     .search-panel {
       background: var(--glass);
-      backdrop-filter: blur(26px) saturate(180%);
-      -webkit-backdrop-filter: blur(26px) saturate(180%);
+      backdrop-filter: blur(34px) saturate(220%);
+      -webkit-backdrop-filter: blur(34px) saturate(220%);
       border: 1px solid var(--glass-edge-soft);
       border-radius: var(--r-lg);
       padding: 10px 14px;
-      box-shadow: var(--shadow-card);
+      box-shadow: var(--glass-edge-top), var(--glass-edge-bottom), var(--shadow-card);
       margin-bottom: 24px;
     }
     .search-panel > * { position: relative; z-index: 2; }
@@ -357,12 +377,12 @@
        =================================================== */
     .participant-card {
       background: var(--glass);
-      backdrop-filter: blur(22px) saturate(180%);
-      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      backdrop-filter: blur(30px) saturate(220%);
+      -webkit-backdrop-filter: blur(30px) saturate(220%);
       border: 1px solid var(--glass-edge-soft);
       border-radius: var(--r-lg);
       padding: 20px;
-      box-shadow: var(--shadow-card);
+      box-shadow: var(--glass-edge-top), var(--glass-edge-bottom), var(--shadow-card);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -371,8 +391,8 @@
     }
     .participant-card > * { position: relative; z-index: 2; }
     .participant-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-pop);
+      transform: translateY(-4px);
+      box-shadow: var(--glass-edge-top), var(--glass-edge-bottom), var(--shadow-pop);
       background: var(--glass-strong);
     }
     .participant-card:active { transform: translateY(-1px) scale(0.995); }
@@ -382,10 +402,10 @@
     }
     .participant-card.is-pinned {
       border: 1.5px solid var(--emerald-line);
-      box-shadow: inset 4px 0 0 var(--emerald), var(--shadow-card);
+      box-shadow: inset 4px 0 0 var(--emerald), var(--glass-edge-top), var(--glass-edge-bottom), var(--shadow-card);
     }
     .participant-card.is-pinned:hover {
-      box-shadow: inset 4px 0 0 var(--emerald), var(--shadow-pop);
+      box-shadow: inset 4px 0 0 var(--emerald), var(--glass-edge-top), var(--glass-edge-bottom), var(--shadow-pop);
     }
 
     .badge-mydata {
@@ -499,6 +519,9 @@
 
     /* ===================================================
        5. FLOATING DOCK
+       Fix: labels forced to one line so icon + text stay
+       vertically aligned across all three buttons regardless
+       of label length ("Data Saya" no longer wraps).
        =================================================== */
     .clean-dock {
       position: fixed;
@@ -506,15 +529,16 @@
       left: 50%;
       transform: translateX(-50%);
       background: var(--glass-strong);
-      backdrop-filter: blur(30px) saturate(200%);
-      -webkit-backdrop-filter: blur(30px) saturate(200%);
+      backdrop-filter: blur(36px) saturate(220%);
+      -webkit-backdrop-filter: blur(36px) saturate(220%);
       border: 1px solid var(--glass-edge);
       border-radius: 50px;
       padding: 5px 8px;
       display: flex;
       align-items: center;
       gap: 4px;
-      box-shadow: var(--shadow-dock);
+      max-width: calc(100vw - 24px);
+      box-shadow: var(--glass-edge-top), var(--glass-edge-bottom), var(--shadow-dock);
       z-index: 9999;
     }
     .clean-dock > * { position: relative; z-index: 2; }
@@ -523,7 +547,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 6px 16px;
+      padding: 7px 15px;
       border-radius: 40px;
       color: var(--ink-soft);
       text-decoration: none;
@@ -532,12 +556,13 @@
       cursor: pointer;
       transition: all 0.2s ease;
       user-select: none;
-      min-width: 74px;
+      white-space: nowrap;
     }
     .dock-btn i {
       font-size: 1.1rem;
       margin-bottom: 2px;
     }
+    .dock-btn span { white-space: nowrap; }
     .dock-btn:hover { color: var(--ink); }
     .dock-btn:active { transform: scale(0.94); }
     .dock-btn.active {
@@ -546,6 +571,10 @@
     }
     .dock-btn.active i { color: var(--bg) !important; }
     .dock-btn.wa-item { color: var(--emerald); }
+    @media (max-width: 380px) {
+      .dock-btn { padding: 6px 10px; font-size: 0.64rem; }
+      .dock-btn i { font-size: 1rem; }
+    }
 
     /* TOAST */
     .toast-alert {
@@ -556,10 +585,10 @@
       max-width: 360px;
       margin: auto;
       background: var(--glass-strong);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      backdrop-filter: blur(32px) saturate(220%);
+      -webkit-backdrop-filter: blur(32px) saturate(220%);
       border: 1px solid var(--glass-edge);
-      box-shadow: var(--shadow-pop);
+      box-shadow: var(--glass-edge-top), var(--glass-edge-bottom), var(--shadow-pop);
       border-radius: var(--r-lg);
       padding: 14px 16px;
       z-index: 10000;
@@ -928,6 +957,23 @@
 
     document.getElementById('searchInput').addEventListener('input', () => renderCards());
     window.onload = () => checkInitialAuth();
+  </script>
+
+  <script>
+    // Liquid glass: specular highlight that follows pointer/finger across glass surfaces
+    (function () {
+      var glassSelector = '.participant-card, .search-panel, .gate-card, .clean-dock, .toast-alert';
+      function updateShine(e) {
+        var target = e.target && e.target.closest ? e.target.closest(glassSelector) : null;
+        if (!target) return;
+        var rect = target.getBoundingClientRect();
+        var mx = ((e.clientX - rect.left) / rect.width) * 100;
+        var my = ((e.clientY - rect.top) / rect.height) * 100;
+        target.style.setProperty('--mx', mx + '%');
+        target.style.setProperty('--my', my + '%');
+      }
+      window.addEventListener('pointermove', updateShine, { passive: true });
+    })();
   </script>
 </body>
 </html>
