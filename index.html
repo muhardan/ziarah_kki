@@ -5,46 +5,202 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Transparansi Dana Ziaroh Wali 5 KKI</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
-      --bg-surface: #f8fafc;
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --card-border: rgba(226, 232, 240, 0.8);
-      --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
-      --text-main: #0f172a;
-      --text-muted: #64748b;
+      color-scheme: light dark;
+
+      /* --- Atmosphere / base --- */
+      --bg: #f1f2f5;
+      --bg-blob-1: rgba(5, 150, 105, 0.07);
+      --bg-blob-2: rgba(100, 116, 139, 0.11);
+      --bg-blob-3: rgba(59, 130, 246, 0.05);
+
+      /* --- Ink / text --- */
+      --ink: #1c1c1e;
+      --ink-soft: rgba(28, 28, 30, 0.62);
+      --ink-faint: rgba(28, 28, 30, 0.38);
+
+      /* --- Glass material --- */
+      --glass: rgba(255, 255, 255, 0.55);
+      --glass-strong: rgba(255, 255, 255, 0.75);
+      --glass-edge: rgba(255, 255, 255, 0.85);
+      --glass-edge-soft: rgba(15, 23, 42, 0.07);
+      --glass-shine: 0.55;
+      --glass-grain: 0.05;
+      --scrim: rgba(15, 23, 42, 0.35);
+
+      /* --- Recessed fields / chips --- */
+      --field-fill: rgba(120, 120, 128, 0.09);
+      --field-fill-focus: rgba(255, 255, 255, 0.95);
+      --chip-fill: rgba(15, 23, 42, 0.045);
+
+      /* --- Accents (brand hues kept, tuned per theme) --- */
       --emerald: #059669;
-      --emerald-light: #ecfdf5;
+      --emerald-soft: rgba(5, 150, 105, 0.12);
+      --emerald-line: rgba(5, 150, 105, 0.35);
       --amber: #d97706;
-      --amber-light: #fffbeb;
+      --amber-soft: rgba(217, 119, 6, 0.12);
+      --amber-line: rgba(217, 119, 6, 0.35);
       --rose: #e11d48;
-      --rose-light: #fff1f2;
+      --rose-soft: rgba(225, 29, 72, 0.12);
+      --rose-line: rgba(225, 29, 72, 0.35);
+      --star: #f59e0b;
+
+      /* --- Shadows --- */
+      --shadow-card: 0 1px 1px rgba(15, 23, 42, 0.03), 0 12px 30px -10px rgba(15, 23, 42, 0.16);
+      --shadow-pop: 0 24px 60px -12px rgba(15, 23, 42, 0.28);
+      --shadow-dock: 0 12px 34px -8px rgba(15, 23, 42, 0.22);
+
+      /* --- Radii --- */
+      --r-sm: 12px;
+      --r-md: 16px;
+      --r-lg: 22px;
+      --r-xl: 26px;
     }
 
-    * { box-sizing: border-box; }
-    
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0a0c;
+        --bg-blob-1: rgba(16, 185, 129, 0.10);
+        --bg-blob-2: rgba(255, 255, 255, 0.035);
+        --bg-blob-3: rgba(56, 130, 246, 0.08);
+
+        --ink: #f5f5f7;
+        --ink-soft: rgba(245, 245, 247, 0.64);
+        --ink-faint: rgba(245, 245, 247, 0.4);
+
+        --glass: rgba(44, 44, 48, 0.55);
+        --glass-strong: rgba(44, 44, 48, 0.78);
+        --glass-edge: rgba(255, 255, 255, 0.14);
+        --glass-edge-soft: rgba(255, 255, 255, 0.08);
+        --glass-shine: 0.16;
+        --glass-grain: 0.07;
+        --scrim: rgba(0, 0, 0, 0.55);
+
+        --field-fill: rgba(120, 120, 128, 0.18);
+        --field-fill-focus: rgba(60, 60, 64, 0.92);
+        --chip-fill: rgba(255, 255, 255, 0.07);
+
+        --emerald: #34d399;
+        --emerald-soft: rgba(52, 211, 153, 0.16);
+        --emerald-line: rgba(52, 211, 153, 0.4);
+        --amber: #fbbf24;
+        --amber-soft: rgba(251, 191, 36, 0.16);
+        --amber-line: rgba(251, 191, 36, 0.4);
+        --rose: #fb7185;
+        --rose-soft: rgba(251, 113, 133, 0.16);
+        --rose-line: rgba(251, 113, 133, 0.4);
+        --star: #fbbf24;
+
+        --shadow-card: 0 1px 1px rgba(0, 0, 0, 0.3), 0 14px 34px -10px rgba(0, 0, 0, 0.55);
+        --shadow-pop: 0 24px 60px -12px rgba(0, 0, 0, 0.65);
+        --shadow-dock: 0 14px 38px -8px rgba(0, 0, 0, 0.6);
+      }
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html { color-scheme: light dark; }
+
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-surface);
-      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+        "Segoe UI Variable", "Segoe UI", "Inter", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--ink);
       margin: 0;
       padding: 0;
-      padding-bottom: 120px;
+      padding-bottom: max(120px, env(safe-area-inset-bottom) + 100px);
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      position: relative;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Atmosphere behind everything -- gives the glass something real to refract */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(38vmax 38vmax at 10% 6%, var(--bg-blob-1), transparent 60%),
+        radial-gradient(42vmax 42vmax at 94% 2%, var(--bg-blob-2), transparent 60%),
+        radial-gradient(46vmax 46vmax at 50% 108%, var(--bg-blob-3), transparent 60%),
+        var(--bg);
+      pointer-events: none;
+    }
+
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-thumb {
+      background: var(--glass-edge-soft);
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+    ::-webkit-scrollbar-track { background: transparent; }
+
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    .dock-btn:focus-visible, .star-btn:focus-visible {
+      outline: 2px solid var(--emerald);
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* Bootstrap text-utility overrides so they follow the theme */
+    .text-dark { color: var(--ink) !important; }
+    .text-muted { color: var(--ink-soft) !important; }
+    .text-success { color: var(--emerald) !important; }
+    .text-danger { color: var(--rose) !important; }
+    ::selection { background: var(--emerald-soft); }
+
+    /* ===================================================
+       LIQUID GLASS MATERIAL (signature element)
+       Applied only to "floating" surfaces: gate card, search
+       panel, participant cards, dock, toast. Recessed fields
+       (finance box, riwayat rows, chips) stay matte on purpose
+       so the glass reads as an actual raised layer, not a
+       blanket filter over everything.
+       =================================================== */
+    .gate-card, .search-panel, .participant-card, .clean-dock, .toast-alert {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .gate-card::before, .search-panel::before, .participant-card::before,
+    .clean-dock::before, .toast-alert::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background:
+        radial-gradient(130% 70% at 18% -14%, rgba(255, 255, 255, var(--glass-shine)), transparent 55%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: cover, 140px 140px;
+      opacity: 1;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 1;
     }
 
     /* ===================================================
-       1. PASSCODE LOCK SCREEN (CLEAN MODAL STYLE)
+       1. PASSCODE LOCK SCREEN
        =================================================== */
     #gate-screen {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.4);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: var(--scrim);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
       z-index: 99999;
       display: flex;
       align-items: center;
@@ -53,64 +209,70 @@
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
     .gate-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 24px;
+      background: var(--glass-strong);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border: 1px solid var(--glass-edge);
+      border-radius: var(--r-xl);
       padding: 36px 28px;
       width: 100%;
       max-width: 360px;
       text-align: center;
-      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-pop);
     }
     .gate-icon {
       width: 56px;
       height: 56px;
-      border-radius: 18px;
-      background: var(--emerald-light);
-      border: 1px solid #a7f3d0;
+      border-radius: var(--r-md);
+      background: var(--emerald-soft);
+      border: 1px solid var(--emerald-line);
       color: var(--emerald);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 1.4rem;
       margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
     }
+    .gate-card h5, .gate-card p, .gate-card form { position: relative; z-index: 2; }
     .gate-input {
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 14px;
+      background: var(--field-fill);
+      border: 1.5px solid transparent;
+      border-radius: var(--r-md);
       padding: 12px;
       font-size: 1.3rem;
       font-weight: 700;
       letter-spacing: 6px;
       text-align: center;
-      color: #0f172a;
+      color: var(--ink);
       transition: all 0.2s ease;
     }
+    .gate-input::placeholder { color: var(--ink-faint); letter-spacing: 4px; }
     .gate-input:focus {
-      background: #ffffff;
+      background: var(--field-fill-focus);
       border-color: var(--emerald);
-      box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
+      box-shadow: 0 0 0 4px var(--emerald-soft);
       outline: none;
     }
     .btn-gate {
-      background: #0f172a;
+      background: var(--ink);
       border: none;
-      color: #ffffff;
-      border-radius: 14px;
+      color: var(--bg);
+      border-radius: var(--r-md);
       padding: 13px;
       font-size: 0.95rem;
       font-weight: 600;
       width: 100%;
       margin-top: 14px;
-      transition: all 0.2s ease;
+      transition: opacity 0.2s ease, transform 0.15s ease;
     }
-    .btn-gate:hover { background: #1e293b; }
-    .btn-gate:active { transform: scale(0.98); }
+    .btn-gate:hover { opacity: 0.85; }
+    .btn-gate:active { transform: scale(0.97); }
     .shake-error {
       animation: shake 0.4s ease-in-out;
       border-color: var(--rose) !important;
-      background: var(--rose-light) !important;
+      background: var(--rose-soft) !important;
     }
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
@@ -119,15 +281,15 @@
     }
 
     /* ===================================================
-       2. TOP BAR & SPOTLIGHT SEARCH
+       2. TOP BAR & SEARCH
        =================================================== */
     .top-hero {
       padding: 24px 0 16px 0;
       text-align: center;
     }
     .badge-subtle {
-      background: #e2e8f0;
-      color: #475569;
+      background: var(--chip-fill);
+      color: var(--ink-soft);
       padding: 4px 12px;
       border-radius: 20px;
       font-size: 0.75rem;
@@ -135,35 +297,39 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
+    .top-hero h3 { letter-spacing: -0.03em !important; }
     .search-panel {
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
+      background: var(--glass);
+      backdrop-filter: blur(26px) saturate(180%);
+      -webkit-backdrop-filter: blur(26px) saturate(180%);
+      border: 1px solid var(--glass-edge-soft);
+      border-radius: var(--r-lg);
       padding: 10px 14px;
-      box-shadow: var(--card-shadow);
+      box-shadow: var(--shadow-card);
       margin-bottom: 24px;
     }
+    .search-panel > * { position: relative; z-index: 2; }
     .search-input {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
+      background: var(--field-fill);
+      border: 1px solid transparent;
+      border-radius: var(--r-md);
       padding: 10px 14px 10px 42px;
       font-size: 0.9rem;
-      color: var(--text-main);
+      color: var(--ink);
       transition: all 0.2s ease;
     }
+    .search-input::placeholder { color: var(--ink-faint); }
     .search-input:focus {
+      background: var(--field-fill-focus);
       border-color: var(--emerald);
-      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+      box-shadow: 0 0 0 3px var(--emerald-soft);
       outline: none;
     }
     .btn-refresh {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      color: var(--text-muted);
-      border-radius: 12px;
+      background: var(--field-fill);
+      border: 1px solid transparent;
+      color: var(--ink-soft);
+      border-radius: var(--r-md);
       padding: 10px 16px;
       cursor: pointer;
       font-weight: 600;
@@ -171,69 +337,61 @@
       transition: all 0.2s;
     }
     .btn-refresh:hover {
-      border-color: var(--emerald);
+      background: var(--emerald-soft);
       color: var(--emerald);
     }
+    .btn-refresh:active { transform: scale(0.96); }
 
     /* ===================================================
-       3. RESPONSIVE GRID LAYOUT (DESKTOP & MOBILE)
+       3. RESPONSIVE GRID (auto-fits any viewport, no
+          hand-tuned breakpoints)
        =================================================== */
     .cards-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-    @media (min-width: 768px) {
-      .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
-    }
-    @media (min-width: 1100px) {
-      .cards-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-      }
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+      gap: clamp(14px, 2vw, 20px);
     }
 
     /* ===================================================
-       4. CLEAN PARTICIPANT CARD
+       4. PARTICIPANT CARD
        =================================================== */
     .participant-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 20px;
+      background: var(--glass);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      border: 1px solid var(--glass-edge-soft);
+      border-radius: var(--r-lg);
       padding: 20px;
-      box-shadow: var(--card-shadow);
+      box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      animation: card-in 0.35s ease both;
     }
+    .participant-card > * { position: relative; z-index: 2; }
     .participant-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.08);
-      border-color: #cbd5e1;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-pop);
+      background: var(--glass-strong);
+    }
+    .participant-card:active { transform: translateY(-1px) scale(0.995); }
+    @keyframes card-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .participant-card.is-pinned {
-      border: 1.5px solid var(--emerald);
-      background: #fafdfc;
+      border: 1.5px solid var(--emerald-line);
+      box-shadow: inset 4px 0 0 var(--emerald), var(--shadow-card);
     }
-    .participant-card.is-pinned::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 4px;
-      background: var(--emerald);
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
+    .participant-card.is-pinned:hover {
+      box-shadow: inset 4px 0 0 var(--emerald), var(--shadow-pop);
     }
 
     .badge-mydata {
-      background: var(--emerald-light);
+      background: var(--emerald-soft);
       color: var(--emerald);
-      border: 1px solid #a7f3d0;
+      border: 1px solid var(--emerald-line);
       padding: 3px 8px;
       border-radius: 6px;
       font-size: 0.7rem;
@@ -243,8 +401,8 @@
       gap: 4px;
     }
     .badge-angkatan {
-      background: #f1f5f9;
-      color: #64748b;
+      background: var(--chip-fill);
+      color: var(--ink-soft);
       padding: 3px 8px;
       border-radius: 6px;
       font-size: 0.72rem;
@@ -260,13 +418,13 @@
       align-items: center;
       gap: 4px;
     }
-    .status-lunas { background: var(--emerald-light); color: var(--emerald); border: 1px solid #a7f3d0; }
-    .status-cicilan { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
-    .status-belum { background: var(--rose-light); color: var(--rose); border: 1px solid #fecaca; }
+    .status-lunas { background: var(--emerald-soft); color: var(--emerald); border: 1px solid var(--emerald-line); }
+    .status-cicilan { background: var(--amber-soft); color: var(--amber); border: 1px solid var(--amber-line); }
+    .status-belum { background: var(--rose-soft); color: var(--rose); border: 1px solid var(--rose-line); }
 
     .star-btn {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
+      background: var(--field-fill);
+      border: 1px solid transparent;
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -274,54 +432,55 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      color: #cbd5e1;
+      color: var(--ink-faint);
       font-size: 0.95rem;
       transition: all 0.2s;
     }
-    .star-btn:hover { color: #f59e0b; }
+    .star-btn:hover { color: var(--star); }
+    .star-btn:active { transform: scale(0.92); }
     .star-btn.active {
-      color: #f59e0b;
-      background: #fffbeb;
-      border-color: #fde68a;
+      color: var(--star);
+      background: var(--amber-soft);
+      border-color: var(--amber-line);
     }
 
     .finance-box {
-      background: #f8fafc;
-      border: 1px solid #f1f5f9;
-      border-radius: 14px;
+      background: var(--field-fill);
+      border: 1px solid var(--glass-edge-soft);
+      border-radius: var(--r-md);
       padding: 12px 14px;
       margin: 14px 0 10px 0;
     }
-    .finance-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+    .finance-label { font-size: 0.7rem; color: var(--ink-faint); font-weight: 600; text-transform: uppercase; }
     .finance-val { font-size: 1rem; font-weight: 800; }
 
     .clean-progress-track {
       height: 5px;
-      background: #e2e8f0;
+      background: var(--glass-edge-soft);
       border-radius: 10px;
       overflow: hidden;
       margin-top: 8px;
     }
     .clean-progress-bar {
       height: 100%;
-      background: var(--emerald);
+      background: linear-gradient(90deg, var(--emerald), color-mix(in srgb, var(--emerald) 55%, white));
       border-radius: 10px;
       transition: width 0.3s ease;
     }
 
     .riwayat-card {
-      background: #ffffff;
-      border: 1px solid #f1f5f9;
-      border-radius: 10px;
+      background: var(--field-fill);
+      border: 1px solid var(--glass-edge-soft);
+      border-radius: var(--r-sm);
       padding: 8px 12px;
       margin-bottom: 6px;
       font-size: 0.8rem;
     }
     .btn-wa-action {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      color: #334155;
-      border-radius: 10px;
+      background: var(--field-fill);
+      border: 1px solid transparent;
+      color: var(--ink-soft);
+      border-radius: var(--r-sm);
       padding: 6px 12px;
       font-size: 0.75rem;
       font-weight: 600;
@@ -336,27 +495,29 @@
       border-color: var(--emerald);
       color: #ffffff;
     }
+    .btn-wa-action:active { transform: scale(0.96); }
 
     /* ===================================================
-       5. CLEAN FLOATING DOCK (REFINED APPLE PILL)
+       5. FLOATING DOCK
        =================================================== */
     .clean-dock {
       position: fixed;
-      bottom: 24px;
+      bottom: max(24px, env(safe-area-inset-bottom) + 12px);
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid rgba(226, 232, 240, 0.9);
+      background: var(--glass-strong);
+      backdrop-filter: blur(30px) saturate(200%);
+      -webkit-backdrop-filter: blur(30px) saturate(200%);
+      border: 1px solid var(--glass-edge);
       border-radius: 50px;
       padding: 5px 8px;
       display: flex;
       align-items: center;
       gap: 4px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-dock);
       z-index: 9999;
     }
+    .clean-dock > * { position: relative; z-index: 2; }
     .dock-btn {
       display: flex;
       flex-direction: column;
@@ -364,7 +525,7 @@
       justify-content: center;
       padding: 6px 16px;
       border-radius: 40px;
-      color: #64748b;
+      color: var(--ink-soft);
       text-decoration: none;
       font-size: 0.7rem;
       font-weight: 600;
@@ -377,12 +538,13 @@
       font-size: 1.1rem;
       margin-bottom: 2px;
     }
-    .dock-btn:hover { color: #0f172a; }
+    .dock-btn:hover { color: var(--ink); }
+    .dock-btn:active { transform: scale(0.94); }
     .dock-btn.active {
-      background: #0f172a;
-      color: #ffffff;
+      background: var(--ink);
+      color: var(--bg);
     }
-    .dock-btn.active i { color: #ffffff !important; }
+    .dock-btn.active i { color: var(--bg) !important; }
     .dock-btn.wa-item { color: var(--emerald); }
 
     /* TOAST */
@@ -393,10 +555,12 @@
       left: 20px;
       max-width: 360px;
       margin: auto;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      border-radius: 16px;
+      background: var(--glass-strong);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--glass-edge);
+      box-shadow: var(--shadow-pop);
+      border-radius: var(--r-lg);
       padding: 14px 16px;
       z-index: 10000;
       transform: translateY(-100px);
@@ -404,6 +568,7 @@
       visibility: hidden;
       transition: all 0.3s ease;
     }
+    .toast-alert > * { position: relative; z-index: 2; }
     .toast-alert.show {
       transform: translateY(0);
       opacity: 1;
