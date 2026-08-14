@@ -2,215 +2,396 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Transparansi Dana Ziaroh Wali 5 KKI</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root { 
-      --bg-main: #f8fafc; 
-      --bg-card: #ffffff; 
-      --text-main: #1e293b; 
-      --text-muted: #64748b; 
-      --border-color: #e2e8f0; 
-      --accent: #10b981; 
-      --accent-dark: #059669;
-    }
-    body { font-family: 'Inter', sans-serif; background-color: var(--bg-main); color: var(--text-main); margin: 0; padding: 0; }
-    
-    .clean-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-    .search-box { background-color: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 12px; padding: 12px 16px; font-size: 0.95rem; transition: all 0.2s ease; }
-    .search-box:focus { background-color: #fff; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); outline: none; }
-
-    /* TOMBOL KONFIRMASI WA */
-    .btn-wa-bendahara { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border: none; border-radius: 12px; padding: 12px 20px; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 4px 10px rgba(16,185,129,0.25); }
-    .btn-wa-bendahara:hover { color: #ffffff; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(16,185,129,0.35); }
-
-    .table-container { background-color: var(--bg-card); border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow-x: auto; }
-    .table { margin-bottom: 0; color: var(--text-main); font-size: 0.9rem; width: 100%; } 
-    .table thead { background-color: #f1f5f9; }
-    .table th { color: #475569; font-weight: 700; padding: 16px; white-space: nowrap; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; border-bottom: 2px solid #cbd5e1; }
-    .table td { border-bottom: 1px solid #e2e8f0; padding: 16px; vertical-align: middle; }
-    .table tbody tr:last-child td { border-bottom: none; }
-    .table tbody tr:nth-child(odd) { background-color: #ffffff; }
-    .table tbody tr:nth-child(even) { background-color: #f8fafc; }
-    .table tbody tr:hover { background-color: #f1f5f9; }
-
-    /* HIGHLIGHT PINNED ROW (DATA SAYA) */
-    .row-pinned { background-color: #f0fdf4 !important; border-left: 4px solid var(--accent) !important; }
-    .badge-pinned { background: #dcfce7; color: #15803d; border: 1px solid #86efac; padding: 3px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; margin-left: 6px; display: inline-flex; align-items: center; gap: 4px; }
-    
-    .btn-pin { background: none; border: none; color: #cbd5e1; font-size: 1.1rem; cursor: pointer; padding: 4px 6px; transition: 0.2s; }
-    .btn-pin:hover { color: #f59e0b; }
-    .btn-pin.pinned { color: #f59e0b; }
-
-    .badge-lunas { background-color: #ecfdf5; color: #059669; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; border: 1px solid #a7f3d0; display: inline-block; }
-    .badge-belum { background-color: #fef2f2; color: #dc2626; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; border: 1px solid #fecaca; display: inline-block; }
-    .badge-cicilan { background-color: #fffbeb; color: #d97706; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.75rem; border: 1px solid #fde68a; display: inline-block; }
-
-    .riwayat-wrapper { display: flex; flex-direction: column; gap: 6px; min-width: 240px; }
-    .riwayat-box { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
-    .riwayat-date { font-size: 0.7rem; color: #64748b; font-weight: 700; display: flex; align-items: center; gap: 6px; text-transform: uppercase; }
-    .riwayat-detail { display: flex; justify-content: space-between; align-items: center; }
-    .riwayat-nominal { font-size: 0.85rem; font-weight: 800; color: #059669; }
-    .riwayat-note { font-size: 0.75rem; color: #64748b; font-style: italic; }
-
-    .btn-refresh { background-color: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-muted); border-radius: 12px; padding: 10px 16px; font-weight: 600; font-size: 0.85rem; transition: all 0.2s ease; cursor: pointer; }
-    .btn-refresh:hover { background-color: #fff; border-color: var(--accent); color: var(--accent); }
-
-    .btn-row-wa { background: #ecfdf5; border: 1px solid #a7f3d0; color: #059669; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: 0.2s; }
-    .btn-row-wa:hover { background: #10b981; color: white; }
-
-    .toast-popup { position: fixed; bottom: 30px; right: 30px; width: 340px; background: #ffffff; border: 1px solid rgba(226, 232, 240, 0.9); box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.12); border-radius: 20px; padding: 20px; z-index: 9999; transform: translateY(150px) scale(0.9); opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    .toast-popup.show { transform: translateY(0) scale(1); opacity: 1; visibility: visible; }
-    .toast-icon-wrapper { flex-shrink: 0; width: 44px; height: 44px; background: linear-gradient(135deg, #34d399 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.15rem; }
-    .btn-close-toast { flex-shrink: 0; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; }
-
-    @media (min-width: 769px) {
-      .table { min-width: 950px; } 
+    :root {
+      --bg-gradient: linear-gradient(135deg, #f0f4f9 0%, #e2e8f0 50%, #edf2f7 100%);
+      --glass-bg: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-shadow: 0 12px 32px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.02);
+      --dock-bg: rgba(28, 28, 30, 0.82);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --apple-green: #10b981;
+      --apple-amber: #f59e0b;
+      --apple-rose: #f43f5e;
     }
 
-    @media (max-width: 768px) {
-      .clean-card { padding: 16px; }
-      .toast-popup { width: calc(100% - 32px); right: 16px; bottom: 16px; padding: 16px; }
-      .table-container { background-color: transparent; border: none; box-shadow: none; border-radius: 0; overflow: visible; }
-      .table { min-width: 100% !important; width: 100%; display: block; }
-      .table thead { display: none; } 
-      .table tbody { display: block; width: 100%; }
-      .table tbody tr {
-        display: block; width: 100%; background-color: var(--bg-card) !important; border: 1px solid #e2e8f0;
-        border-radius: 18px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow: hidden;
-      }
-      .table td { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-bottom: 1px solid #e2e8f0; text-align: right; font-size: 0.9rem; }
-      .table td::before { content: attr(data-label); font-weight: 600; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; width: 40%; text-align: left; margin-right: 12px; flex-shrink: 0; }
-      .table td[data-label="Nama Mahasiswa"] { background-color: #f8fafc; padding: 16px 18px; border-bottom: 1px solid #cbd5e1; font-size: 1.05rem; font-weight: 800; color: #0f172a; justify-content: space-between; text-align: left; }
-      .table td[data-label="Nama Mahasiswa"]::before { display: none; }
-      .table td[data-label="Dana Masuk"] { font-weight: 700; color: #059669; }
-      .table td[data-label="Sisa Kurang"] { font-weight: 700; }
-      .table td:last-child { flex-direction: column; align-items: flex-start; background-color: #fcfcfc; padding: 16px 18px; }
-      .table td[data-label="Riwayat Pembayaran"]::before { width: 100%; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; color: #475569; }
-      .riwayat-wrapper { min-width: 100%; width: 100%; }
-      .riwayat-box { width: 100%; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+      padding-bottom: 120px; /* Ruang agar tidak tertutup floating dock */
+      min-height: 100vh;
+    }
+
+    /* SPOTLIGHT SEARCH (APPLE STYLE) */
+    .spotlight-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: var(--glass-shadow);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+    .spotlight-input {
+      background: rgba(241, 245, 249, 0.7);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 16px;
+      padding: 12px 16px 12px 46px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-main);
+      transition: all 0.25s ease;
+    }
+    .spotlight-input:focus {
+      background: #ffffff;
+      border-color: var(--apple-green);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+      outline: none;
+    }
+    .btn-refresh-icon {
+      background: rgba(241, 245, 249, 0.9);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      color: var(--text-muted);
+      border-radius: 16px;
+      padding: 12px 18px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-refresh-icon:hover {
+      background: #ffffff;
+      color: var(--apple-green);
+      border-color: var(--apple-green);
+    }
+
+    /* LIQUID GLASS CARD (PARTICIPANT) */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: var(--glass-shadow);
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+    
+    /* HIGHLIGHT PINNED (DATA SAYA) */
+    .glass-card.is-pinned {
+      border: 1.5px solid rgba(16, 185, 129, 0.5);
+      background: linear-gradient(135deg, rgba(236, 253, 245, 0.85) 0%, rgba(255, 255, 255, 0.75) 100%);
+    }
+    .glass-card.is-pinned::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    }
+
+    .badge-mydata {
+      background: rgba(16, 185, 129, 0.12);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .badge-angkatan {
+      background: rgba(100, 116, 139, 0.1);
+      color: #475569;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* BADGE STATUS APPLE PILL */
+    .badge-status {
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .status-lunas { background: rgba(16, 185, 129, 0.12); color: #047857; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-cicilan { background: rgba(245, 158, 11, 0.12); color: #b45309; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .status-belum { background: rgba(244, 63, 94, 0.1); color: #be123c; border: 1px solid rgba(244, 63, 94, 0.25); }
+
+    .star-btn {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      transition: all 0.2s;
+    }
+    .star-btn.active {
+      color: #f59e0b;
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    /* STATS BOX DI DALAM CARD */
+    .stats-container {
+      background: rgba(248, 250, 252, 0.65);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin: 14px 0;
+    }
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-value { font-size: 1.05rem; font-weight: 800; }
+
+    /* APPLE LIQUID PROGRESS BAR */
+    .apple-progress-track {
+      height: 6px;
+      background: rgba(226, 232, 240, 0.8);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .apple-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    /* RIWAYAT BOX */
+    .riwayat-container {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 14px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+    }
+    .btn-confirm-wa {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #059669;
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-confirm-wa:hover {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    /* FLOATING LIQUID GLASS DOCK (PERSIS SEPERTI GAMBAR 2) */
+    .apple-floating-dock {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--dock-bg);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+      z-index: 9999;
+      max-width: calc(100vw - 32px);
+    }
+    .dock-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border-radius: 40px;
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 60px;
+      user-select: none;
+    }
+    .dock-item i {
+      font-size: 1.15rem;
+      margin-bottom: 2px;
+    }
+    .dock-item:hover {
+      color: #ffffff;
+    }
+    .dock-item.active {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+    .dock-item.btn-wa-highlight {
+      color: #34d399;
+    }
+
+    /* TOAST POPUP */
+    .toast-popup {
+      position: fixed;
+      top: 24px;
+      right: 20px;
+      left: 20px;
+      max-width: 380px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      padding: 16px;
+      z-index: 10000;
+      transform: translateY(-120px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .toast-popup.show {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
     }
   </style>
 </head>
 <body>
-  <div class="container-fluid px-3 py-4" style="max-width: 1200px; margin: auto;">
-    
-    <!-- HEADER UTAMA -->
-    <div class="mb-4 text-center mt-2">
-      <h2 class="fw-bold mb-2 text-dark">Transparansi Dana Ziaroh Wali 5 KKI</h2>
-      <p class="text-muted small">Pantau status pembayaranmu dan konfirmasikan ke panitia secara real-time.</p>
-      
-      <!-- TOMBOL KONFIRMASI PEMBAYARAN KE BENDAHARA -->
-      <div class="mt-3">
-        <button class="btn-wa-bendahara" onclick="konfirmasiKeBendahara()">
-          <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Sudah Transfer? Konfirmasi ke Bendahara
-        </button>
-      </div>
-    </div>
-    
-    <!-- KOTAK PENCARIAN -->
-    <div class="clean-card mb-4">
-      <div class="d-flex gap-2 flex-wrap flex-md-nowrap">
-        <div class="position-relative flex-grow-1">
-          <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #94a3b8;"></i>
-          <input type="text" id="searchInput" class="form-control search-box w-100 ps-5" placeholder="Ketik Nama Mahasiswa atau Angkatan...">
-        </div>
-        <button id="btnRefresh" class="btn-refresh d-flex align-items-center gap-2" onclick="fetchApiData(true)" title="Perbarui Data Langsung dari Server">
-          <i class="fas fa-sync-alt" id="refreshIcon"></i> <span>Refresh</span>
-        </button>
-      </div>
-    </div>
-    
-    <!-- TABEL DATA PESERTA -->
-    <div class="table-container">
-      <table class="table">
-        <thead>
-          <tr>
-            <th width="5%">No</th>
-            <th>Nama Mahasiswa</th>
-            <th>Angkatan</th>
-            <th>Dana Masuk</th>
-            <th>Status</th>
-            <th>Sisa Kurang</th>
-            <th>Riwayat Pembayaran</th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-          <tr><td colspan="7" class="text-center text-muted py-5"><div class="spinner-border text-success spinner-border-sm me-2" role="status"></div> Mengambil data dari server...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
   <!-- TOAST PENGINGAT -->
   <div id="notes-popup" class="toast-popup">
-    <div class="d-flex align-items-center">
-      <div class="toast-icon-wrapper me-3"><i class="fas fa-bell"></i></div>
-      <div class="flex-grow-1 pe-2">
-        <h6 class="fw-bold mb-1" style="color: #0f172a; font-size: 0.9rem;">Pengingat Panitia</h6>
-        <p class="mb-0" style="color: #475569; font-size: 0.8rem; line-height: 1.4;">Jangan lupa dilunasi sebelum bulan Oktober ya teman-teman 😊</p>
+    <div class="d-flex align-items-center gap-3">
+      <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">
+        <i class="fas fa-bell"></i>
       </div>
-      <button class="btn-close-toast align-self-start" onclick="document.getElementById('notes-popup').classList.remove('show')"><i class="fas fa-times"></i></button>
+      <div class="flex-grow-1">
+        <h6 class="fw-bold mb-0" style="font-size: 0.88rem;">Pengingat Panitia</h6>
+        <p class="text-muted mb-0" style="font-size: 0.78rem;">Jangan lupa dilunasi sebelum bulan Oktober ya 😊</p>
+      </div>
+      <button class="btn btn-sm text-muted" onclick="document.getElementById('notes-popup').classList.remove('show')">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="container py-4" style="max-width: 780px;">
+    
+    <!-- HEADER -->
+    <div class="text-center mb-4 mt-2">
+      <span class="badge-angkatan mb-2 d-inline-block">Transparansi Keuangan</span>
+      <h3 class="fw-extrabold text-dark mb-1" style="letter-spacing: -0.5px; font-weight: 800;">Ziaroh Wali 5 KKI</h3>
+      <p class="text-muted small">Cek progres cicilan dan konfirmasi bukti transfer langsung.</p>
+    </div>
+
+    <!-- SPOTLIGHT SEARCH BAR -->
+    <div class="spotlight-card">
+      <div class="d-flex gap-2">
+        <div class="position-relative flex-grow-1">
+          <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #94a3b8;"></i>
+          <input type="text" id="searchInput" class="form-control spotlight-input w-100" placeholder="Cari nama atau angkatan...">
+        </div>
+        <button class="btn-refresh-icon" onclick="fetchApiData(true)" title="Muat Ulang">
+          <i class="fas fa-sync-alt" id="refreshIcon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- CONTAINER CARD PESERTA -->
+    <div id="cards-container">
+      <div class="text-center py-5 text-muted">
+        <div class="spinner-border text-success spinner-border-sm me-2" role="status"></div> Mengambil data live...
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FLOATING LIQUID GLASS DOCK (PERSIS SEPERTI GAMBAR 2) -->
+  <div class="apple-floating-dock">
+    <div class="dock-item active" onclick="setDockFilter('ALL', this)">
+      <i class="fas fa-layer-group"></i>
+      <span>Semua</span>
+    </div>
+    <div class="dock-item" onclick="setDockFilter('PINNED', this)">
+      <i class="fas fa-star" style="color: #f59e0b;"></i>
+      <span>Data Saya</span>
+    </div>
+    <div class="dock-item" onclick="setDockFilter('BELUM_LUNAS', this)">
+      <i class="fas fa-hourglass-half" style="color: #f43f5e;"></i>
+      <span>Belum</span>
+    </div>
+    <div class="dock-item" onclick="setDockFilter('LUNAS', this)">
+      <i class="fas fa-check-circle" style="color: #10b981;"></i>
+      <span>Lunas</span>
+    </div>
+    <div class="dock-item btn-wa-highlight" onclick="konfirmasiKeBendahara()">
+      <i class="fab fa-whatsapp"></i>
+      <span>Bendahara</span>
     </div>
   </div>
 
   <script>
     // URL API GOOGLE APPS SCRIPT
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQe5Nm70lQBXLiIA7V35pAp-oYhXkjPObEGhFxd-nkb8aLx8Dsz5R78lk6mSz-jp4Pzg/exec";
-
-    // NO WHATSAPP BENDAHARA (RAMA)
     const WA_BENDAHARA = "6282131652906";
-
-    // STORAGE KEYS & CACHE SETTING
     const CACHE_KEY = "ziarah_peserta_cache";
     const PINNED_KEY = "ziarah_pinned_nama";
-    const CACHE_EXPIRY_MS = 3 * 60 * 1000; // 3 Menit
+    const CACHE_EXPIRY_MS = 3 * 60 * 1000;
 
     const formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka || 0);
     
-    const getBadge = (status) => {
+    const getStatusBadge = (status) => {
       let s = status ? status.toString().toUpperCase() : '';
-      if(s === 'LUNAS') return '<span class="badge-lunas">LUNAS</span>';
-      if(s === 'CICILAN') return '<span class="badge-cicilan">CICILAN</span>';
-      return '<span class="badge-belum">BELUM BAYAR</span>';
-    };
-
-    const buildRiwayatHtml = (riwayatArr, namaMhs, angkatan) => {
-      let cleanNama = (namaMhs || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-      let waBtn = `<div class="mt-2 text-end"><a href="javascript:void(0)" class="btn-row-wa" onclick="konfirmasiPerOrang('${cleanNama}', '${angkatan}')"><i class="fab fa-whatsapp"></i> Konfirmasi Cicilan</a></div>`;
-      
-      if (!riwayatArr || riwayatArr.length === 0) {
-        return `<div class="text-muted small py-1" style="font-style:italic;">Belum ada riwayat pembayaran</div>${waBtn}`;
-      }
-      
-      let html = '<div class="riwayat-wrapper">';
-      riwayatArr.forEach(r => {
-        html += `
-          <div class="riwayat-box">
-            <div class="riwayat-date">
-              <i class="fas fa-check-circle text-success" style="font-size:0.75rem;"></i> ${r.tgl}
-            </div>
-            <div class="riwayat-detail">
-              <span class="riwayat-nominal">${formatRp(r.nom)}</span>
-              <span class="riwayat-note">${r.ket}</span>
-            </div>
-          </div>`;
-      });
-      return html + `</div>${waBtn}`;
+      if(s === 'LUNAS') return `<span class="badge-status status-lunas"><i class="fas fa-check-circle"></i> LUNAS</span>`;
+      if(s === 'CICILAN') return `<span class="badge-status status-cicilan"><i class="fas fa-coins"></i> CICILAN</span>`;
+      return `<span class="badge-status status-belum"><i class="fas fa-clock"></i> BELUM BAYAR</span>`;
     };
 
     let globalData = [];
+    let activeFilter = 'ALL';
 
-    // 1. FETCH DATA API (DENGAN SESSIONSTORAGE CACHE)
     async function fetchApiData(forceRefresh = false) {
       const refreshIcon = document.getElementById('refreshIcon');
       if(refreshIcon) refreshIcon.classList.add('fa-spin');
@@ -222,72 +403,72 @@
             const parsed = JSON.parse(cached);
             if ((Date.now() - parsed.timestamp) < CACHE_EXPIRY_MS && parsed.data && parsed.data.length > 0) {
               globalData = parsed.data;
-              renderTablePeserta();
+              renderCards();
               if (refreshIcon) refreshIcon.classList.remove('fa-spin');
               setTimeout(() => { document.getElementById('notes-popup').classList.add('show'); }, 1000);
               return;
             }
           }
-        } catch (e) {
-          console.warn("Gagal membaca cache:", e);
-        }
+        } catch(e){}
       }
 
       try {
         const response = await fetch(APPS_SCRIPT_URL + "?api=true");
         const resData = await response.json();
-        
         globalData = Array.isArray(resData) ? resData : (resData.peserta ? resData.peserta : []);
-        
         try {
           sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: globalData }));
-        } catch(e) {}
-
-        renderTablePeserta();
+        } catch(e){}
+        renderCards();
         setTimeout(() => { document.getElementById('notes-popup').classList.add('show'); }, 1000);
       } catch (error) {
-        console.error(error);
-        document.getElementById('table-body').innerHTML = `
-          <tr>
-            <td colspan="7" class="text-center text-danger py-5">
-              <i class="fas fa-exclamation-triangle mb-2" style="font-size: 1.5rem;"></i><br>
-              Gagal terhubung ke Database. Silakan klik tombol <b>Refresh</b> di atas.
-            </td>
-          </tr>`;
+        document.getElementById('cards-container').innerHTML = `
+          <div class="glass-card text-center py-5 text-danger">
+            <i class="fas fa-exclamation-triangle mb-2" style="font-size: 1.8rem;"></i>
+            <div class="fw-bold">Gagal memuat data dari Database</div>
+            <button class="btn btn-sm btn-outline-danger mt-3 rounded-pill" onclick="fetchApiData(true)">Coba Lagi</button>
+          </div>`;
       } finally {
         if (refreshIcon) refreshIcon.classList.remove('fa-spin');
       }
     }
 
-    // 2. PIN DATA SAYA (LOCALSTORAGE)
-    window.togglePinNama = function(nama) {
-      let savedPin = localStorage.getItem(PINNED_KEY);
-      if (savedPin === nama) {
-        localStorage.removeItem(PINNED_KEY);
-      } else {
-        localStorage.setItem(PINNED_KEY, nama);
-      }
-      renderTablePeserta();
+    window.setDockFilter = function(filterVal, el) {
+      activeFilter = filterVal;
+      document.querySelectorAll('.dock-item').forEach(i => i.classList.remove('active'));
+      if(el) el.classList.add('active');
+      renderCards();
     };
 
-    // 3. RENDER TABEL UTAMA (SEARCH + PIN SORTING)
-    function renderTablePeserta() {
-      const tbody = document.getElementById('table-body');
-      tbody.innerHTML = '';
+    window.togglePinNama = function(nama) {
+      let savedPin = localStorage.getItem(PINNED_KEY);
+      if (savedPin === nama) localStorage.removeItem(PINNED_KEY);
+      else localStorage.setItem(PINNED_KEY, nama);
+      renderCards();
+    };
+
+    function renderCards() {
+      const container = document.getElementById('cards-container');
+      container.innerHTML = '';
 
       let kw = (document.getElementById('searchInput').value || '').toLowerCase();
       let pinnedNama = localStorage.getItem(PINNED_KEY) || '';
 
       let filtered = globalData.filter(p => {
-        return p['Nama Mahasiswa'].toLowerCase().includes(kw) || p.Angkatan.toString().toLowerCase().includes(kw);
+        let matchKw = p['Nama Mahasiswa'].toLowerCase().includes(kw) || p.Angkatan.toString().toLowerCase().includes(kw);
+        let matchFilter = true;
+        if (activeFilter === 'PINNED') matchFilter = (p['Nama Mahasiswa'] === pinnedNama);
+        else if (activeFilter === 'BELUM_LUNAS') matchFilter = (p.Status !== 'LUNAS');
+        else if (activeFilter === 'LUNAS') matchFilter = (p.Status === 'LUNAS');
+        return matchKw && matchFilter;
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-5">Tidak ada data yang sesuai.</td></tr>`;
+        container.innerHTML = `<div class="glass-card text-center py-5 text-muted">Tidak ada data yang cocok.</div>`;
         return;
       }
 
-      // Baris yang di-pin otomatis berada di urutan teratas
+      // Prioritas data pinned di paling atas
       filtered.sort((a, b) => {
         if (a['Nama Mahasiswa'] === pinnedNama) return -1;
         if (b['Nama Mahasiswa'] === pinnedNama) return 1;
@@ -296,56 +477,97 @@
 
       filtered.forEach((p, i) => {
         let isPinned = (p['Nama Mahasiswa'] === pinnedNama);
-        let rowClass = isPinned ? 'row-pinned' : '';
-        let pinIconClass = isPinned ? 'fas fa-star pinned' : 'far fa-star';
-        let pinBadge = isPinned ? '<span class="badge-pinned"><i class="fas fa-user-check"></i> Data Saya</span>' : '';
         let safeNama = p['Nama Mahasiswa'].replace(/'/g, "\\'");
+        
+        let target = p['Target Lunas'] || 0;
+        let masuk = p['Total Masuk'] || 0;
+        let sisa = p['Sisa Kurang'] || 0;
+        let pct = target > 0 ? Math.min((masuk / target) * 100, 100).toFixed(0) : 0;
 
-        tbody.insertAdjacentHTML('beforeend', `
-          <tr class="${rowClass}">
-            <td data-label="No" class="text-muted fw-semibold">
-              <button class="btn-pin ${isPinned?'pinned':''}" onclick="togglePinNama('${safeNama}')" title="${isPinned?'Lepas Pin':'Tandai sebagai data saya'}">
-                <i class="${pinIconClass}"></i>
-              </button>
-              <span class="d-none d-md-inline ms-1">${i+1}</span>
-            </td>
-            <td data-label="Nama Mahasiswa">
-              <div class="d-flex align-items-center">
-                <span class="fw-bold text-dark">${p['Nama Mahasiswa']}</span>
-                ${pinBadge}
+        // Render Riwayat
+        let riwayatHtml = '';
+        if (p.Riwayat && p.Riwayat.length > 0) {
+          riwayatHtml = '<div class="mt-3"><div class="stat-label mb-2">Riwayat Pembayaran</div>';
+          p.Riwayat.forEach(r => {
+            riwayatHtml += `
+              <div class="riwayat-container d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="small fw-bold text-dark"><i class="fas fa-check-circle text-success me-1"></i> ${r.tgl}</div>
+                  <div class="text-muted" style="font-size: 0.72rem; font-style: italic;">${r.ket || '-'}</div>
+                </div>
+                <div class="fw-bold text-success" style="font-size: 0.9rem;">${formatRp(r.nom)}</div>
+              </div>`;
+          });
+          riwayatHtml += '</div>';
+        }
+
+        container.insertAdjacentHTML('beforeend', `
+          <div class="glass-card ${isPinned ? 'is-pinned' : ''}">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <div class="d-flex align-items-center gap-2 mb-1">
+                  <span class="badge-angkatan">Angkatan ${p.Angkatan}</span>
+                  ${isPinned ? '<span class="badge-mydata"><i class="fas fa-user-check"></i> Data Saya</span>' : ''}
+                </div>
+                <h5 class="fw-bold text-dark mb-0" style="letter-spacing: -0.3px;">${p['Nama Mahasiswa']}</h5>
               </div>
-            </td>
-            <td data-label="Angkatan">${p.Angkatan}</td>
-            <td data-label="Dana Masuk" class="text-success fw-bold">${formatRp(p['Total Masuk'])}</td>
-            <td data-label="Status">${getBadge(p.Status)}</td>
-            <td data-label="Sisa Kurang" class="fw-bold ${p['Sisa Kurang'] > 0 ? 'text-danger' : 'text-muted'}">${formatRp(p['Sisa Kurang'])}</td>
-            <td data-label="Riwayat Pembayaran">${buildRiwayatHtml(p.Riwayat, p['Nama Mahasiswa'], p.Angkatan)}</td>
-          </tr>
+              <button class="star-btn ${isPinned ? 'active' : ''}" onclick="togglePinNama('${safeNama}')" title="Tandai data saya">
+                <i class="fas fa-star"></i>
+              </button>
+            </div>
+
+            <!-- STATS BOX -->
+            <div class="stats-container">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                  <div class="stat-label">Dana Masuk</div>
+                  <div class="stat-value text-success">${formatRp(masuk)}</div>
+                </div>
+                <div class="text-end">
+                  <div class="stat-label">Sisa Kurang</div>
+                  <div class="stat-value ${sisa > 0 ? 'text-danger' : 'text-muted'}">${formatRp(sisa)}</div>
+                </div>
+              </div>
+              
+              <div class="d-flex justify-content-between align-items-center small text-muted mt-2" style="font-size: 0.75rem;">
+                <span>Progres Pelunasan</span>
+                <span class="fw-bold text-dark">${pct}%</span>
+              </div>
+              <div class="apple-progress-track">
+                <div class="apple-progress-bar" style="width: ${pct}%;"></div>
+              </div>
+            </div>
+
+            <!-- STATUS & ACTION -->
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div>${getStatusBadge(p.Status)}</div>
+              <a href="javascript:void(0)" class="btn-confirm-wa" onclick="konfirmasiPerOrang('${safeNama}', '${p.Angkatan}')">
+                <i class="fab fa-whatsapp"></i> Konfirmasi Cicilan
+              </a>
+            </div>
+
+            ${riwayatHtml}
+          </div>
         `);
       });
     }
 
-    // 4. KONFIRMASI WA BENDAHARA
     window.konfirmasiKeBendahara = function() {
       let pinnedNama = localStorage.getItem(PINNED_KEY);
       let mhs = globalData.find(p => p['Nama Mahasiswa'] === pinnedNama);
-      
       let namaTeks = mhs ? mhs['Nama Mahasiswa'] : '[Nama Lengkap]';
       let angkatanTeks = mhs ? mhs.Angkatan : '[Angkatan]';
 
-      let pesan = `Assalamu'alaikum Panitia, saya ${namaTeks} (Angkatan ${angkatanTeks}) sudah transfer pembayaran ziarah. Berikut saya lampirkan bukti transfernya. Terima kasih.`;
+      let pesan = `Assalamu'alaikum Bendahara, saya ${namaTeks} (Angkatan ${angkatanTeks}) mau konfirmasi transfer pembayaran ziarah. Berikut saya lampirkan bukti transfernya. Terima kasih.`;
       window.open(`https://wa.me/${WA_BENDAHARA}?text=${encodeURIComponent(pesan)}`, '_blank');
     };
 
     window.konfirmasiPerOrang = function(nama, angkatan) {
-      let pesan = `Assalamu'alaikum Panitia, saya ${nama} (Angkatan ${angkatan}) sudah transfer pembayaran ziarah. Berikut saya lampirkan bukti transfernya. Terima kasih.`;
+      let pesan = `Assalamu'alaikum Bendahara, saya ${nama} (Angkatan ${angkatan}) sudah transfer cicilan ziarah. Berikut bukti transfernya. Terima kasih.`;
       window.open(`https://wa.me/${WA_BENDAHARA}?text=${encodeURIComponent(pesan)}`, '_blank');
     };
 
-    document.getElementById('searchInput').addEventListener('input', () => {
-      renderTablePeserta();
-    });
-
+    document.getElementById('searchInput').addEventListener('input', () => renderCards());
     window.onload = () => fetchApiData(false);
   </script>
 </body>
