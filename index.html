@@ -28,13 +28,6 @@
 
     .search-box { background-color: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 12px; padding: 12px 16px; font-size: 0.95rem; transition: all 0.2s ease; }
     .search-box:focus { background-color: #fff; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); outline: none; }
-    
-    /* FILTER CHIPS */
-    .filter-chips-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
-    .filter-chips-container::-webkit-scrollbar { display: none; }
-    .filter-chip { white-space: nowrap; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-muted); padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; user-select: none; }
-    .filter-chip:hover { border-color: var(--accent); color: var(--accent-dark); background: #ecfdf5; }
-    .filter-chip.active { background: var(--accent); color: #ffffff; border-color: var(--accent); box-shadow: 0 2px 4px rgba(16,185,129,0.3); }
 
     /* TOMBOL KONFIRMASI WA */
     .btn-wa-bendahara { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border: none; border-radius: 12px; padding: 12px 20px; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 4px 10px rgba(16,185,129,0.25); }
@@ -124,9 +117,9 @@
       </div>
     </div>
     
-    <!-- KOTAK PENCARIAN & FILTER CHIPS -->
+    <!-- KOTAK PENCARIAN -->
     <div class="clean-card mb-4">
-      <div class="d-flex gap-2 flex-wrap flex-md-nowrap mb-3">
+      <div class="d-flex gap-2 flex-wrap flex-md-nowrap">
         <div class="position-relative flex-grow-1">
           <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #94a3b8;"></i>
           <input type="text" id="searchInput" class="form-control search-box w-100 ps-5" placeholder="Ketik Nama Mahasiswa atau Angkatan...">
@@ -134,15 +127,6 @@
         <button id="btnRefresh" class="btn-refresh d-flex align-items-center gap-2" onclick="fetchApiData(true)" title="Perbarui Data Langsung dari Server">
           <i class="fas fa-sync-alt" id="refreshIcon"></i> <span>Refresh</span>
         </button>
-      </div>
-      
-      <!-- FILTER CHIPS CEPAT -->
-      <div class="filter-chips-container" id="filterChips">
-        <div class="filter-chip active" onclick="setChipFilter('ALL', this)"><i class="fas fa-list-ul me-1"></i> Semua</div>
-        <div class="filter-chip" onclick="setChipFilter('PINNED', this)"><i class="fas fa-star me-1 text-warning"></i> Data Saya</div>
-        <div class="filter-chip" onclick="setChipFilter('BELUM_LUNAS', this)"><i class="fas fa-clock me-1 text-danger"></i> Belum Lunas</div>
-        <div class="filter-chip" onclick="setChipFilter('LUNAS', this)"><i class="fas fa-check-circle me-1 text-success"></i> Lunas</div>
-        <div class="filter-chip" onclick="setChipFilter('CICILAN', this)"><i class="fas fa-coins me-1 text-warning"></i> Cicilan</div>
       </div>
     </div>
     
@@ -225,7 +209,6 @@
     };
 
     let globalData = [];
-    let activeFilter = 'ALL';
 
     // 1. FETCH DATA API (DENGAN SESSIONSTORAGE CACHE)
     async function fetchApiData(forceRefresh = false) {
@@ -239,7 +222,6 @@
             const parsed = JSON.parse(cached);
             if ((Date.now() - parsed.timestamp) < CACHE_EXPIRY_MS && parsed.data && parsed.data.length > 0) {
               globalData = parsed.data;
-              buildDynamicAngkatanChips();
               renderTablePeserta();
               if (refreshIcon) refreshIcon.classList.remove('fa-spin');
               setTimeout(() => { document.getElementById('notes-popup').classList.add('show'); }, 1000);
@@ -261,7 +243,6 @@
           sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: globalData }));
         } catch(e) {}
 
-        buildDynamicAngkatanChips();
         renderTablePeserta();
         setTimeout(() => { document.getElementById('notes-popup').classList.add('show'); }, 1000);
       } catch (error) {
@@ -278,33 +259,7 @@
       }
     }
 
-    // 2. CHIPS ANGKATAN DINAMIS
-    function buildDynamicAngkatanChips() {
-      const container = document.getElementById('filterChips');
-      const existingStatic = `
-        <div class="filter-chip ${activeFilter==='ALL'?'active':''}" onclick="setChipFilter('ALL', this)"><i class="fas fa-list-ul me-1"></i> Semua</div>
-        <div class="filter-chip ${activeFilter==='PINNED'?'active':''}" onclick="setChipFilter('PINNED', this)"><i class="fas fa-star me-1 text-warning"></i> Data Saya</div>
-        <div class="filter-chip ${activeFilter==='BELUM_LUNAS'?'active':''}" onclick="setChipFilter('BELUM_LUNAS', this)"><i class="fas fa-clock me-1 text-danger"></i> Belum Lunas</div>
-        <div class="filter-chip ${activeFilter==='LUNAS'?'active':''}" onclick="setChipFilter('LUNAS', this)"><i class="fas fa-check-circle me-1 text-success"></i> Lunas</div>
-        <div class="filter-chip ${activeFilter==='CICILAN'?'active':''}" onclick="setChipFilter('CICILAN', this)"><i class="fas fa-coins me-1 text-warning"></i> Cicilan</div>
-      `;
-      
-      let angkatanSet = new Set(globalData.map(p => p.Angkatan).filter(Boolean));
-      let dynamicChips = '';
-      Array.from(angkatanSet).sort().forEach(a => {
-        dynamicChips += `<div class="filter-chip ${activeFilter==='ANGKATAN_'+a?'active':''}" onclick="setChipFilter('ANGKATAN_${a}', this)">Angkt ${a}</div>`;
-      });
-      container.innerHTML = existingStatic + dynamicChips;
-    }
-
-    window.setChipFilter = function(filterVal, el) {
-      activeFilter = filterVal;
-      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-      if(el) el.classList.add('active');
-      renderTablePeserta();
-    };
-
-    // 3. PIN DATA SAYA (LOCALSTORAGE)
+    // 2. PIN DATA SAYA (LOCALSTORAGE)
     window.togglePinNama = function(nama) {
       let savedPin = localStorage.getItem(PINNED_KEY);
       if (savedPin === nama) {
@@ -315,7 +270,7 @@
       renderTablePeserta();
     };
 
-    // 4. RENDER TABEL UTAMA
+    // 3. RENDER TABEL UTAMA (SEARCH + PIN SORTING)
     function renderTablePeserta() {
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = '';
@@ -324,19 +279,7 @@
       let pinnedNama = localStorage.getItem(PINNED_KEY) || '';
 
       let filtered = globalData.filter(p => {
-        let matchKw = p['Nama Mahasiswa'].toLowerCase().includes(kw) || p.Angkatan.toString().toLowerCase().includes(kw);
-        
-        let matchChip = true;
-        if (activeFilter === 'PINNED') matchChip = (p['Nama Mahasiswa'] === pinnedNama);
-        else if (activeFilter === 'BELUM_LUNAS') matchChip = (p.Status !== 'LUNAS');
-        else if (activeFilter === 'LUNAS') matchChip = (p.Status === 'LUNAS');
-        else if (activeFilter === 'CICILAN') matchChip = (p.Status === 'CICILAN');
-        else if (activeFilter.startsWith('ANGKATAN_')) {
-          let targetAngkt = activeFilter.replace('ANGKATAN_', '');
-          matchChip = (p.Angkatan.toString() === targetAngkt);
-        }
-
-        return matchKw && matchChip;
+        return p['Nama Mahasiswa'].toLowerCase().includes(kw) || p.Angkatan.toString().toLowerCase().includes(kw);
       });
 
       if (filtered.length === 0) {
@@ -344,7 +287,7 @@
         return;
       }
 
-      // Baris yang di-pin otomatis di atas
+      // Baris yang di-pin otomatis berada di urutan teratas
       filtered.sort((a, b) => {
         if (a['Nama Mahasiswa'] === pinnedNama) return -1;
         if (b['Nama Mahasiswa'] === pinnedNama) return 1;
@@ -382,7 +325,7 @@
       });
     }
 
-    // 5. KONFIRMASI WA BENDAHARA
+    // 4. KONFIRMASI WA BENDAHARA
     window.konfirmasiKeBendahara = function() {
       let pinnedNama = localStorage.getItem(PINNED_KEY);
       let mhs = globalData.find(p => p['Nama Mahasiswa'] === pinnedNama);
