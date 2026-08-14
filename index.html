@@ -29,14 +29,14 @@
     .search-box { background-color: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 12px; padding: 12px 16px; font-size: 0.95rem; transition: all 0.2s ease; }
     .search-box:focus { background-color: #fff; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); outline: none; }
     
-    /* FILTER CHIPS (HORIZONTAL SCROLL) */
+    /* FILTER CHIPS */
     .filter-chips-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
     .filter-chips-container::-webkit-scrollbar { display: none; }
     .filter-chip { white-space: nowrap; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-muted); padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; user-select: none; }
     .filter-chip:hover { border-color: var(--accent); color: var(--accent-dark); background: #ecfdf5; }
     .filter-chip.active { background: var(--accent); color: #ffffff; border-color: var(--accent); box-shadow: 0 2px 4px rgba(16,185,129,0.3); }
 
-    /* TOMBOL KONFIRMASI WA BENDAHARA */
+    /* TOMBOL KONFIRMASI WA */
     .btn-wa-bendahara { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border: none; border-radius: 12px; padding: 12px 20px; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: all 0.2s ease; box-shadow: 0 4px 10px rgba(16,185,129,0.25); }
     .btn-wa-bendahara:hover { color: #ffffff; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(16,185,129,0.35); }
 
@@ -131,7 +131,7 @@
           <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: #94a3b8;"></i>
           <input type="text" id="searchInput" class="form-control search-box w-100 ps-5" placeholder="Ketik Nama Mahasiswa atau Angkatan...">
         </div>
-        <button id="btnRefresh" class="btn-refresh d-flex align-items-center gap-2" onclick="fetchApiData(true)" title="Perbarui Data">
+        <button id="btnRefresh" class="btn-refresh d-flex align-items-center gap-2" onclick="fetchApiData(true)" title="Perbarui Data Langsung dari Server">
           <i class="fas fa-sync-alt" id="refreshIcon"></i> <span>Refresh</span>
         </button>
       </div>
@@ -180,13 +180,13 @@
   </div>
 
   <script>
-    // URL API GOOGLE APPS SCRIPT AKTIF TERBARU
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQe5Nm70lQBXLiLA7V35pAp-oYhXkjPObEGhFxd-nkb8aLx8Dsz5R78lk6mSz-jp4Pzg/exec";
+    // URL API GOOGLE APPS SCRIPT
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQe5Nm70lQBXLiIA7V35pAp-oYhXkjPObEGhFxd-nkb8aLx8Dsz5R78lk6mSz-jp4Pzg/exec";
 
     // NO WHATSAPP BENDAHARA (RAMA)
     const WA_BENDAHARA = "6282131652906";
 
-    // CLIENT CACHE & PIN STORAGE KEYS
+    // STORAGE KEYS & CACHE SETTING
     const CACHE_KEY = "ziarah_peserta_cache";
     const PINNED_KEY = "ziarah_pinned_nama";
     const CACHE_EXPIRY_MS = 3 * 60 * 1000; // 3 Menit
@@ -227,7 +227,7 @@
     let globalData = [];
     let activeFilter = 'ALL';
 
-    // 1. FUNGSI FETCH DATA DENGAN CLIENT CACHE
+    // 1. FETCH DATA API (DENGAN SESSIONSTORAGE CACHE)
     async function fetchApiData(forceRefresh = false) {
       const refreshIcon = document.getElementById('refreshIcon');
       if(refreshIcon) refreshIcon.classList.add('fa-spin');
@@ -278,7 +278,7 @@
       }
     }
 
-    // 2. FITUR GENERATE DYNAMIC ANGKATAN CHIPS
+    // 2. CHIPS ANGKATAN DINAMIS
     function buildDynamicAngkatanChips() {
       const container = document.getElementById('filterChips');
       const existingStatic = `
@@ -304,7 +304,7 @@
       renderTablePeserta();
     };
 
-    // 3. FITUR PIN MY DATA (LOCALSTORAGE)
+    // 3. PIN DATA SAYA (LOCALSTORAGE)
     window.togglePinNama = function(nama) {
       let savedPin = localStorage.getItem(PINNED_KEY);
       if (savedPin === nama) {
@@ -315,7 +315,7 @@
       renderTablePeserta();
     };
 
-    // 4. RENDER TABEL UTAMA (SEARCH + CHIPS + PIN SORTING)
+    // 4. RENDER TABEL UTAMA
     function renderTablePeserta() {
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = '';
@@ -323,7 +323,6 @@
       let kw = (document.getElementById('searchInput').value || '').toLowerCase();
       let pinnedNama = localStorage.getItem(PINNED_KEY) || '';
 
-      // A. Filter Search & Chips
       let filtered = globalData.filter(p => {
         let matchKw = p['Nama Mahasiswa'].toLowerCase().includes(kw) || p.Angkatan.toString().toLowerCase().includes(kw);
         
@@ -345,14 +344,13 @@
         return;
       }
 
-      // B. Sorting agar yang di-PIN selalu di posisi paling atas
+      // Baris yang di-pin otomatis di atas
       filtered.sort((a, b) => {
         if (a['Nama Mahasiswa'] === pinnedNama) return -1;
         if (b['Nama Mahasiswa'] === pinnedNama) return 1;
         return 0;
       });
 
-      // C. Render Baris
       filtered.forEach((p, i) => {
         let isPinned = (p['Nama Mahasiswa'] === pinnedNama);
         let rowClass = isPinned ? 'row-pinned' : '';
@@ -384,7 +382,7 @@
       });
     }
 
-    // 5. FITUR KONFIRMASI WA KE BENDAHARA
+    // 5. KONFIRMASI WA BENDAHARA
     window.konfirmasiKeBendahara = function() {
       let pinnedNama = localStorage.getItem(PINNED_KEY);
       let mhs = globalData.find(p => p['Nama Mahasiswa'] === pinnedNama);
@@ -401,7 +399,6 @@
       window.open(`https://wa.me/${WA_BENDAHARA}?text=${encodeURIComponent(pesan)}`, '_blank');
     };
 
-    // PENCARIAN REALTIME
     document.getElementById('searchInput').addEventListener('input', () => {
       renderTablePeserta();
     });
