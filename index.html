@@ -9,20 +9,17 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
-      /* PALET WARNA TENANG & NATURAL */
       --bg-base: #f6f8fb;
       --text-main: #0f172a;
       --text-muted: #64748b;
       --text-faint: #94a3b8;
       
-      /* LIQUID GLASS LAYER */
       --glass-bg: rgba(255, 255, 255, 0.65);
       --glass-bg-hover: rgba(255, 255, 255, 0.85);
       --glass-border: rgba(255, 255, 255, 0.85);
       --glass-inset: inset 0 1.5px 2px rgba(255, 255, 255, 0.95), inset 0 -1px 2px rgba(15, 23, 42, 0.03);
       --glass-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
       
-      /* ACCENT COLORS */
       --emerald: #059669;
       --emerald-bg: rgba(16, 185, 129, 0.1);
       --emerald-border: rgba(16, 185, 129, 0.25);
@@ -35,6 +32,12 @@
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    /* Hilangkan ikon mata password bawaan Windows / Edge (Anti Mata Ganda) */
+    input::-ms-reveal,
+    input::-ms-clear {
+      display: none !important;
+    }
     
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -53,9 +56,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===================================================
-       1. PASSCODE MODAL GATE
-       =================================================== */
+    /* PASSCODE MODAL GATE */
     #gate-screen {
       position: fixed;
       inset: 0;
@@ -94,25 +95,10 @@
       font-size: 1.15rem;
       margin-bottom: 12px;
     }
-    .gate-title {
-      font-size: 1.08rem;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 4px;
-      letter-spacing: -0.3px;
-    }
-    .gate-subtitle {
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      margin-bottom: 18px;
-      line-height: 1.35;
-    }
-    .pass-input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-bottom: 6px;
-    }
+    .gate-title { font-size: 1.08rem; font-weight: 800; color: #0f172a; margin-bottom: 4px; letter-spacing: -0.3px; }
+    .gate-subtitle { color: var(--text-muted); font-size: 0.78rem; margin-bottom: 18px; line-height: 1.35; }
+    .pass-input-wrapper { position: relative; display: flex; align-items: center; margin-bottom: 6px; }
+    
     .gate-input {
       background: rgba(241, 245, 249, 0.85);
       border: 1px solid #cbd5e1;
@@ -126,379 +112,72 @@
       width: 100%;
       transition: all 0.2s ease;
     }
-    .gate-input:focus {
-      background: #ffffff;
-      border-color: var(--emerald);
-      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
-      outline: none;
-    }
-    .btn-toggle-eye {
-      position: absolute;
-      right: 10px;
-      background: transparent;
-      border: none;
-      color: #94a3b8;
-      font-size: 0.95rem;
-      cursor: pointer;
-      padding: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color 0.2s ease;
-    }
+    .gate-input:focus { background: #ffffff; border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12); outline: none; }
+    .btn-toggle-eye { position: absolute; right: 10px; background: transparent; border: none; color: #94a3b8; font-size: 0.95rem; cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; transition: color 0.2s ease; }
     .btn-toggle-eye:hover { color: #475569; }
-    .btn-gate {
-      background: #0f172a;
-      border: none;
-      color: #ffffff;
-      border-radius: 14px;
-      padding: 11px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      width: 100%;
-      margin-top: 10px;
-      transition: opacity 0.2s, transform 0.1s;
-    }
+    .btn-gate { background: #0f172a; border: none; color: #ffffff; border-radius: 14px; padding: 11px; font-size: 0.88rem; font-weight: 600; width: 100%; margin-top: 10px; transition: opacity 0.2s, transform 0.1s; }
     .btn-gate:hover { opacity: 0.9; }
     .btn-gate:active { transform: scale(0.98); }
-    .shake-error {
-      animation: shake 0.4s ease-in-out;
-      border-color: var(--rose) !important;
-      background: var(--rose-bg) !important;
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-6px); }
-      40%, 80% { transform: translateX(6px); }
-    }
+    .shake-error { animation: shake 0.4s ease-in-out; border-color: var(--rose) !important; background: var(--rose-bg) !important; }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 
-    /* ===================================================
-       2. HEADER UTAMA
-       =================================================== */
-    .header-section {
-      text-align: center;
-      padding: 28px 0 16px 0;
-    }
-    .header-title {
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: #0f172a;
-      font-size: 1.55rem;
-      margin-bottom: 6px;
-    }
-    .header-subtitle {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin: 0;
-    }
+    /* HEADER UTAMA */
+    .header-section { text-align: center; padding: 28px 0 16px 0; }
+    .header-title { font-weight: 800; letter-spacing: -0.5px; color: #0f172a; font-size: 1.55rem; margin-bottom: 6px; }
+    .header-subtitle { color: var(--text-muted); font-size: 0.85rem; margin: 0; }
 
-    /* ===================================================
-       3. SEARCH BAR LIQUID GLASS
-       =================================================== */
-    .search-panel {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 18px;
-      padding: 8px 10px;
-      box-shadow: var(--glass-shadow), var(--glass-inset);
-      margin-bottom: 20px;
-    }
-    .search-input {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      border-radius: 12px;
-      padding: 9px 14px 9px 40px;
-      font-size: 0.88rem;
-      color: var(--text-main);
-      transition: all 0.2s ease;
-    }
-    .search-input:focus {
-      background: #ffffff;
-      border-color: var(--emerald);
-      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
-      outline: none;
-    }
-    .btn-refresh {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      color: var(--text-muted);
-      border-radius: 12px;
-      padding: 9px 14px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.82rem;
-      transition: all 0.2s;
-    }
-    .btn-refresh:hover {
-      background: #ffffff;
-      color: var(--emerald);
-    }
+    /* SEARCH BAR LIQUID GLASS */
+    .search-panel { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 18px; padding: 8px 10px; box-shadow: var(--glass-shadow), var(--glass-inset); margin-bottom: 20px; }
+    .search-input { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(226, 232, 240, 0.9); border-radius: 12px; padding: 9px 14px 9px 40px; font-size: 0.88rem; color: var(--text-main); transition: all 0.2s ease; }
+    .search-input:focus { background: #ffffff; border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12); outline: none; }
+    .btn-refresh { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(226, 232, 240, 0.9); color: var(--text-muted); border-radius: 12px; padding: 9px 14px; cursor: pointer; font-weight: 600; font-size: 0.82rem; transition: all 0.2s; }
+    .btn-refresh:hover { background: #ffffff; color: var(--emerald); }
 
-    /* ===================================================
-       4. RESPONSIVE GRID
-       =================================================== */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    @media (min-width: 768px) {
-      .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 18px;
-      }
-    }
-    @media (min-width: 1100px) {
-      .cards-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-      }
-    }
+    /* RESPONSIVE GRID */
+    .cards-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 768px) { .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+    @media (min-width: 1100px) { .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
 
-    /* ===================================================
-       5. LIQUID GLASS PARTICIPANT CARD
-       =================================================== */
-    .participant-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border: 1.2px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: var(--glass-shadow), var(--glass-inset);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      position: relative;
-    }
-    .participant-card:hover {
-      background: var(--glass-bg-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.07), var(--glass-inset);
-    }
-    .participant-card.is-pinned {
-      border: 1.5px solid var(--emerald-border);
-      background: linear-gradient(135deg, rgba(236, 253, 245, 0.7) 0%, rgba(255, 255, 255, 0.8) 100%);
-    }
-    .participant-card.is-pinned::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 4px;
-      background: var(--emerald);
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-    }
+    /* LIQUID GLASS PARTICIPANT CARD */
+    .participant-card { background: var(--glass-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1.2px solid var(--glass-border); border-radius: 20px; padding: 18px; box-shadow: var(--glass-shadow), var(--glass-inset); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; position: relative; }
+    .participant-card:hover { background: var(--glass-bg-hover); transform: translateY(-2px); box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.07), var(--glass-inset); }
+    .participant-card.is-pinned { border: 1.5px solid var(--emerald-border); background: linear-gradient(135deg, rgba(236, 253, 245, 0.7) 0%, rgba(255, 255, 255, 0.8) 100%); }
+    .participant-card.is-pinned::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--emerald); border-top-left-radius: 20px; border-bottom-left-radius: 20px; }
 
-    .badge-mydata {
-      background: var(--emerald-bg);
-      color: var(--emerald);
-      border: 1px solid var(--emerald-border);
-      padding: 2px 7px;
-      border-radius: 6px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-    }
-    .badge-angkatan {
-      background: rgba(241, 245, 249, 0.8);
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      color: #64748b;
-      padding: 2px 7px;
-      border-radius: 6px;
-      font-size: 0.7rem;
-      font-weight: 600;
-    }
-
-    .status-pill {
-      padding: 3px 9px;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
+    .badge-mydata { background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border); padding: 2px 7px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; }
+    .badge-angkatan { background: rgba(241, 245, 249, 0.8); border: 1px solid rgba(226, 232, 240, 0.8); color: #64748b; padding: 2px 7px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; }
+    .status-pill { padding: 3px 9px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
     .status-lunas { background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border); }
     .status-cicilan { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
     .status-belum { background: var(--rose-bg); color: var(--rose); border: 1px solid var(--rose-border); }
 
-    .star-btn {
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid #e2e8f0;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #cbd5e1;
-      font-size: 0.88rem;
-      transition: all 0.2s;
-    }
+    .star-btn { background: rgba(255, 255, 255, 0.8); border: 1px solid #e2e8f0; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #cbd5e1; font-size: 0.88rem; transition: all 0.2s; }
     .star-btn:hover { color: #f59e0b; }
-    .star-btn.active {
-      color: #f59e0b;
-      background: #fffbeb;
-      border-color: #fde68a;
-    }
+    .star-btn.active { color: #f59e0b; background: #fffbeb; border-color: #fde68a; }
 
-    .finance-box {
-      background: rgba(255, 255, 255, 0.5);
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      border-radius: 12px;
-      padding: 10px 12px;
-      margin: 10px 0 8px 0;
-    }
+    .finance-box { background: rgba(255, 255, 255, 0.5); border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 12px; padding: 10px 12px; margin: 10px 0 8px 0; }
     .finance-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
     .finance-val { font-size: 0.95rem; font-weight: 800; }
+    .clean-progress-track { height: 5px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-top: 6px; }
+    .clean-progress-bar { height: 100%; background: var(--emerald); border-radius: 10px; transition: width 0.3s ease; }
 
-    .clean-progress-track {
-      height: 5px;
-      background: #e2e8f0;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-top: 6px;
-    }
-    .clean-progress-bar {
-      height: 100%;
-      background: var(--emerald);
-      border-radius: 10px;
-      transition: width 0.3s ease;
-    }
+    .riwayat-card { background: rgba(255, 255, 255, 0.65); border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 9px; padding: 7px 10px; margin-bottom: 5px; font-size: 0.78rem; }
+    .btn-wa-action { background: rgba(255, 255, 255, 0.8); border: 1px solid #cbd5e1; color: #334155; border-radius: 9px; padding: 5px 10px; font-size: 0.72rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; transition: all 0.2s; }
+    .btn-wa-action:hover { background: var(--emerald); border-color: var(--emerald); color: #ffffff; }
 
-    .riwayat-card {
-      background: rgba(255, 255, 255, 0.65);
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      border-radius: 9px;
-      padding: 7px 10px;
-      margin-bottom: 5px;
-      font-size: 0.78rem;
-    }
-    .btn-wa-action {
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid #cbd5e1;
-      color: #334155;
-      border-radius: 9px;
-      padding: 5px 10px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .btn-wa-action:hover {
-      background: var(--emerald);
-      border-color: var(--emerald);
-      color: #ffffff;
-    }
-
-    /* ===================================================
-       6. AUTHENTIC LIQUID GLASS DOCK (TEMBUS PANDANG & CEMBUNG)
-       =================================================== */
-    .liquid-dock-wrapper {
-      position: fixed;
-      bottom: 20px;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      pointer-events: none;
-    }
-    .liquid-dock {
-      pointer-events: auto;
-      /* KACA BENING TEMBUS PANDANG */
-      background: rgba(255, 255, 255, 0.38);
-      backdrop-filter: blur(28px) saturate(210%);
-      -webkit-backdrop-filter: blur(28px) saturate(210%);
-      border: 1.5px solid rgba(255, 255, 255, 0.85);
-      border-radius: 999px;
-      padding: 4px 6px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      /* REFRAKSI & PANTULAN CAHAYA CEMBUNG */
-      box-shadow: 
-        0 16px 36px -6px rgba(15, 23, 42, 0.12),
-        0 4px 12px rgba(0, 0, 0, 0.04),
-        inset 0 2px 3px rgba(255, 255, 255, 0.95),
-        inset 0 -2px 3px rgba(15, 23, 42, 0.04);
-      width: max-content;
-      max-width: calc(100vw - 32px);
-    }
-    .dock-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 16px;
-      border-radius: 999px;
-      color: #334155;
-      text-decoration: none;
-      font-size: 0.7rem;
-      font-weight: 700;
-      line-height: 1.1;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      user-select: none;
-      min-width: 78px;
-    }
-    .dock-btn i {
-      font-size: 1.05rem;
-      margin-bottom: 3px;
-      line-height: 1;
-    }
-    .dock-btn span {
-      white-space: nowrap;
-      display: block;
-    }
+    /* AUTHENTIC LIQUID GLASS DOCK (TEMBUS PANDANG & CEMBUNG) */
+    .liquid-dock-wrapper { position: fixed; bottom: 20px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; z-index: 9999; pointer-events: none; }
+    .liquid-dock { pointer-events: auto; background: rgba(255, 255, 255, 0.38); backdrop-filter: blur(28px) saturate(210%); -webkit-backdrop-filter: blur(28px) saturate(210%); border: 1.5px solid rgba(255, 255, 255, 0.85); border-radius: 999px; padding: 4px 6px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04), inset 0 2px 3px rgba(255, 255, 255, 0.95), inset 0 -2px 3px rgba(15, 23, 42, 0.04); width: max-content; max-width: calc(100vw - 32px); }
+    .dock-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 16px; border-radius: 999px; color: #334155; text-decoration: none; font-size: 0.7rem; font-weight: 700; line-height: 1.1; white-space: nowrap; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); user-select: none; min-width: 78px; }
+    .dock-btn i { font-size: 1.05rem; margin-bottom: 3px; line-height: 1; }
     .dock-btn:hover { color: #0f172a; }
-    .dock-btn.active {
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(10px);
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-    }
+    .dock-btn.active { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); color: #ffffff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3); }
     .dock-btn.active i { color: #ffffff !important; }
     .dock-btn.wa-item { color: #059669; }
 
     /* TOAST */
-    .toast-alert {
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      left: 18px;
-      max-width: 350px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-      border-radius: 14px;
-      padding: 12px 14px;
-      z-index: 10000;
-      transform: translateY(-100px);
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-    .toast-alert.show {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
-    }
+    .toast-alert { position: fixed; top: 18px; right: 18px; left: 18px; max-width: 350px; margin: auto; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-radius: 14px; padding: 12px 14px; z-index: 10000; transform: translateY(-100px); opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .toast-alert.show { transform: translateY(0); opacity: 1; visibility: visible; }
   </style>
 </head>
 <body>
@@ -533,16 +212,12 @@
         <h6 class="fw-bold mb-0" style="font-size: 0.8rem;">Pengingat Panitia</h6>
         <p class="text-muted mb-0" style="font-size: 0.72rem;">Jangan lupa dilunasi sebelum bulan Oktober ya 😊</p>
       </div>
-      <button class="btn btn-sm text-muted p-0" onclick="document.getElementById('notes-popup').classList.remove('show')">
-        <i class="fas fa-times"></i>
-      </button>
+      <button class="btn btn-sm text-muted p-0" onclick="document.getElementById('notes-popup').classList.remove('show')"><i class="fas fa-times"></i></button>
     </div>
   </div>
 
-  <!-- KONTEN UTAMA RESPONSIVE CONTAINER (MAX 1200px) -->
+  <!-- KONTEN UTAMA -->
   <div class="container-xl px-3 px-md-4" id="main-content" style="max-width: 1200px; display: none;">
-    
-    <!-- HEADER UTAMA -->
     <div class="header-section">
       <h2 class="header-title">Transparansi Dana Ziaroh Wali 5 KKI</h2>
       <p class="header-subtitle">Jangan lupa konfirmasi ke panitia setiap melakukan pembayaran!</p>
@@ -567,28 +242,25 @@
         <div class="spinner-border text-success spinner-border-sm me-2" role="status"></div> Mengambil data live...
       </div>
     </div>
-
   </div>
 
   <!-- AUTHENTIC LIQUID GLASS DOCK -->
   <div class="liquid-dock-wrapper" id="dockWrapper" style="display: none;">
     <div class="liquid-dock">
       <div class="dock-btn" onclick="dockAksiCari()">
-        <i class="fas fa-search"></i>
-        <span>Cari</span>
+        <i class="fas fa-search"></i><span>Cari</span>
       </div>
       <div class="dock-btn" id="dockDataSaya" onclick="toggleFilterDataSaya()">
-        <i class="fas fa-star" style="color: #f59e0b;"></i>
-        <span>Data Saya</span>
+        <i class="fas fa-star" style="color: #f59e0b;"></i><span>Data Saya</span>
       </div>
       <div class="dock-btn wa-item" onclick="konfirmasiKeBendahara()">
-        <i class="fab fa-whatsapp"></i>
-        <span>Bendahara</span>
+        <i class="fab fa-whatsapp"></i><span>Bendahara</span>
       </div>
     </div>
   </div>
 
   <script>
+    // SESUAIKAN DENGAN URL DEPLOYMENT GOOGLE APPS SCRIPT-MU!
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQe5Nm70lQBXLiIA7V35pAp-oYhXkjPObEGhFxd-nkb8aLx8Dsz5R78lk6mSz-jp4Pzg/exec";
     const WA_BENDAHARA = "6282131652906";
 
@@ -634,7 +306,7 @@
       }
     }
 
-    // --- VERIFIKASI KE BACKEND (PASSWORD: 2026) ---
+    // --- VERIFIKASI ---
     window.verifikasiAkses = async function() {
       const passInput = document.getElementById('gatePass');
       const errText = document.getElementById('gateError');
@@ -670,11 +342,12 @@
       }, 300);
     }
 
-    // --- PENARIKAN DATA TERVERIFIKASI BACKEND ---
+    // --- FETCH DATA DENGAN TIMEOUT ABORT CONTROLLER (ANTI STUCK / LEMOT) ---
     async function fetchApiDataWithCode(code, forceRefresh = false, autoUnlockOnSuccess = false) {
       const refreshIcon = document.getElementById('refreshIcon');
-      if(refreshIcon) refreshIcon.classList.add('fa-spin');
+      if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
+      // Cek Cache Lokal Browser (Instant Access)
       if (!forceRefresh) {
         try {
           const cached = sessionStorage.getItem(CACHE_KEY);
@@ -689,32 +362,49 @@
               return true;
             }
           }
-        } catch(e){}
+        } catch (e) {}
       }
 
+      // Fetch ke Backend dengan batas timeout 12 detik (Mencegah gantung selamanya)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+
       try {
-        const response = await fetch(`${APPS_SCRIPT_URL}?api=true&code=${encodeURIComponent(code)}`);
+        const response = await fetch(`${APPS_SCRIPT_URL}?api=true&code=${encodeURIComponent(code)}`, {
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        
         const resData = await response.json();
         
         if (resData.status === "error") {
-          return false;
+          return false; // Password salah
         }
 
         globalData = Array.isArray(resData) ? resData : (resData.peserta ? resData.peserta : []);
         
         try {
           sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: globalData }));
-        } catch(e){}
+        } catch (e) {}
 
         renderCards();
         if (autoUnlockOnSuccess) unlockAppDirectly();
         setTimeout(() => { document.getElementById('notes-popup').classList.add('show'); }, 800);
         return true;
+
       } catch (error) {
+        clearTimeout(timeoutId);
         console.error("Gagal terhubung:", error);
+        alert("Koneksi internet lambat atau server sedang sibuk. Silakan coba tekan tombol Masuk sekali lagi.");
         return false;
       } finally {
         if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+        // Reset Tombol Verifikasi jika terjadi timeout
+        const btnSubmit = document.getElementById('btnSubmitGate');
+        if (btnSubmit && btnSubmit.disabled) {
+           btnSubmit.innerHTML = 'Masuk';
+           btnSubmit.disabled = false;
+        }
       }
     }
 
@@ -881,7 +571,6 @@
       });
     }
 
-    // --- DOCK ACTION: WA BENDAHARA ---
     window.konfirmasiKeBendahara = function() {
       let pinnedNama = localStorage.getItem(PINNED_KEY);
       let mhs = globalData.find(p => p['Nama Mahasiswa'] === pinnedNama);
