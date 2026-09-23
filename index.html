@@ -50,12 +50,12 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* HEADER UTAMA */
+    /* HEADER */
     .header-section { text-align: center; padding: 28px 0 16px 0; }
     .header-title { font-weight: 800; letter-spacing: -0.5px; color: #0f172a; font-size: 1.55rem; margin-bottom: 6px; }
     .header-subtitle { color: var(--text-muted); font-size: 0.85rem; margin: 0; }
 
-    /* SEARCH BAR LIQUID GLASS */
+    /* SEARCH BAR */
     .search-panel { 
       background: var(--glass-bg); 
       backdrop-filter: blur(20px); 
@@ -94,12 +94,12 @@
     }
     .btn-refresh:hover { background: #ffffff; color: var(--emerald); }
 
-    /* RESPONSIVE GRID */
+    /* GRID */
     .cards-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
     @media (min-width: 768px) { .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
     @media (min-width: 1100px) { .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
 
-    /* LIQUID GLASS PARTICIPANT CARD */
+    /* CARD PESERTA */
     .participant-card { 
       background: var(--glass-bg); 
       backdrop-filter: blur(25px); 
@@ -220,7 +220,7 @@
     }
     .btn-wa-action:hover { background: var(--emerald); border-color: var(--emerald); color: #ffffff; }
 
-    /* AUTHENTIC LIQUID GLASS DOCK */
+    /* DOCK */
     .liquid-dock-wrapper { 
       position: fixed; 
       bottom: 20px; 
@@ -319,7 +319,7 @@
     </div>
   </div>
 
-  <!-- KONTEN UTAMA (LANGSUNG TAMPIL TANPA GERBANG SANDI) -->
+  <!-- KONTEN UTAMA (LANGSUNG DITAMPILKAN SECARA INSTAN) -->
   <div class="container-xl px-3 px-md-4" id="main-content" style="max-width: 1200px;">
     <div class="header-section">
       <h2 class="header-title">Transparansi Dana Ziaroh Wali 5 KKI</h2>
@@ -368,7 +368,6 @@
 
     const CACHE_KEY = "ziarah_peserta_cache";
     const PINNED_KEY = "ziarah_pinned_nama";
-    const CACHE_EXPIRY_MS = 3 * 60 * 1000;
 
     const formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka || 0);
     
@@ -382,57 +381,63 @@
     let globalData = [];
     let isFilterDataSayaActive = false;
 
-    // --- FETCH DATA OTOMATIS (LANGSUNG TERBUKA) ---
+    // --- FETCH DATA CEPAT DENGAN TEKNIK SWR (INSTANT LOAD) ---
     async function fetchApiData(forceRefresh = false) {
       const refreshIcon = document.getElementById('refreshIcon');
       if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-      // 1. Cek Cache Lokal Browser untuk akses instan (0.01 detik)
-      if (!forceRefresh) {
+      // 1. CEK CACHE LOKAL: Tampilkan data langsung jika pernah buka sebelumnya (0.1 detik!)
+      const localCached = localStorage.getItem(CACHE_KEY);
+      if (localCached && !forceRefresh) {
         try {
-          const cached = sessionStorage.getItem(CACHE_KEY);
-          if (cached) {
-            const parsed = JSON.parse(cached);
-            if ((Date.now() - parsed.timestamp) < CACHE_EXPIRY_MS && parsed.data && parsed.data.length > 0) {
-              globalData = parsed.data;
-              renderCards();
-              if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-              setTimeout(() => { document.getElementById('notes-popup').classList.add('show'); }, 800);
-              return;
-            }
+          const parsed = JSON.parse(localCached);
+          if (parsed && parsed.data && parsed.data.length > 0) {
+            globalData = parsed.data;
+            renderCards(); // Gambar kartu langsung tanpa jeda
           }
         } catch (e) {}
       }
 
-      // 2. Fetch ke Backend GAS
+      // 2. FETCH KE GOOGLE APPS SCRIPT DI LATAR BELAKANG
+      // Batas waktu 30 detik untuk mengakomodasi Cold Start server Google
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
 
       try {
         const response = await fetch(`${APPS_SCRIPT_URL}?api=true`, {
           signal: controller.signal
         });
         clearTimeout(timeoutId);
-        
-        const resData = await response.json();
-        globalData = Array.isArray(resData) ? resData : (resData.peserta ? resData.peserta : []);
-        
-        try {
-          sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: globalData }));
-        } catch (e) {}
 
-        renderCards();
-        setTimeout(() => { document.getElementById('notes-popup').classList.add('show'); }, 800);
+        const resData = await response.json();
+        const incomingData = Array.isArray(resData) ? resData : (resData.peserta ? resData.peserta : []);
+
+        if (incomingData && incomingData.length > 0) {
+          globalData = incomingData;
+          // Simpan ke localStorage agar kunjungan berikutnya langsung instan
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: globalData }));
+          renderCards();
+          setTimeout(() => { 
+            const notes = document.getElementById('notes-popup');
+            if (notes) notes.classList.add('show'); 
+          }, 600);
+        }
 
       } catch (error) {
         clearTimeout(timeoutId);
-        console.error("Gagal terhubung:", error);
+        console.error("Gagal sinkron data:", error);
+        
+        // Tampilkan peringatan HANYA jika memori lokal benar-benar kosong
         const container = document.getElementById('cards-container');
         if (container && (!globalData || globalData.length === 0)) {
           container.innerHTML = `
             <div class="participant-card text-center py-5 text-danger col-12">
               <i class="fas fa-exclamation-triangle mb-2" style="font-size: 1.5rem;"></i>
-              <div>Koneksi lambat atau server sedang sibuk. Silakan klik tombol <b>Refresh</b>.</div>
+              <div class="fw-bold mb-1">Server Google sedang bangun...</div>
+              <div class="small text-muted mb-3">Silakan klik tombol di bawah untuk mencoba kembali.</div>
+              <button class="btn btn-sm btn-dark rounded-pill px-4" onclick="fetchApiData(true)">
+                <i class="fas fa-sync-alt me-1"></i> Muat Ulang
+              </button>
             </div>`;
         }
       } finally {
