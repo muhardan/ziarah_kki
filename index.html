@@ -220,6 +220,30 @@
     }
     .btn-wa-action:hover { background: var(--emerald); border-color: var(--emerald); color: #ffffff; }
 
+    /* =========================================
+       SKELETON SHIMMER LOADING (UX MODERN)
+       ========================================= */
+    .skeleton-card {
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .skeleton-line {
+      height: 14px;
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 8px;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
     /* DOCK */
     .liquid-dock-wrapper { 
       position: fixed; 
@@ -319,7 +343,7 @@
     </div>
   </div>
 
-  <!-- KONTEN UTAMA (LANGSUNG DITAMPILKAN SECARA INSTAN) -->
+  <!-- KONTEN UTAMA -->
   <div class="container-xl px-3 px-md-4" id="main-content" style="max-width: 1200px;">
     <div class="header-section">
       <h2 class="header-title">Transparansi Dana Ziaroh Wali 5 KKI</h2>
@@ -339,11 +363,15 @@
       </div>
     </div>
 
-    <!-- RESPONSIVE CARDS CONTAINER -->
+    <!-- RESPONSIVE CARDS CONTAINER (DEFAULT: SKELETON CARDS) -->
     <div id="cards-container" class="cards-grid">
-      <div class="text-center py-5 text-muted col-12">
-        <div class="spinner-border text-success spinner-border-sm me-2" role="status"></div> Mengambil data live...
-      </div>
+      <!-- 6 Skeleton Cards langsung tampil saat web terbuka -->
+      <div class="skeleton-card"><div class="skeleton-line" style="width: 35%;"></div><div class="skeleton-line" style="width: 70%; height: 20px;"></div><div class="skeleton-line" style="height: 60px;"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line" style="width: 40%;"></div><div class="skeleton-line" style="width: 65%; height: 20px;"></div><div class="skeleton-line" style="height: 60px;"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line" style="width: 30%;"></div><div class="skeleton-line" style="width: 75%; height: 20px;"></div><div class="skeleton-line" style="height: 60px;"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line" style="width: 35%;"></div><div class="skeleton-line" style="width: 60%; height: 20px;"></div><div class="skeleton-line" style="height: 60px;"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line" style="width: 45%;"></div><div class="skeleton-line" style="width: 80%; height: 20px;"></div><div class="skeleton-line" style="height: 60px;"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line" style="width: 30%;"></div><div class="skeleton-line" style="width: 65%; height: 20px;"></div><div class="skeleton-line" style="height: 60px;"></div></div>
     </div>
   </div>
 
@@ -381,27 +409,26 @@
     let globalData = [];
     let isFilterDataSayaActive = false;
 
-    // --- FETCH DATA CEPAT DENGAN TEKNIK SWR (INSTANT LOAD) ---
+    // --- FETCH DATA CEPAT DENGAN SWR (STALE WHILE REVALIDATE) ---
     async function fetchApiData(forceRefresh = false) {
       const refreshIcon = document.getElementById('refreshIcon');
       if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-      // 1. CEK CACHE LOKAL: Tampilkan data langsung jika pernah buka sebelumnya (0.1 detik!)
+      // 1. CEK CACHE LOKAL: Tampilkan data langsung jika pernah buka sebelumnya (0.05 detik!)
       const localCached = localStorage.getItem(CACHE_KEY);
       if (localCached && !forceRefresh) {
         try {
           const parsed = JSON.parse(localCached);
           if (parsed && parsed.data && parsed.data.length > 0) {
             globalData = parsed.data;
-            renderCards(); // Gambar kartu langsung tanpa jeda
+            renderCards(); // Langsung ganti skeleton dengan data asli tanpa menunggu Google!
           }
         } catch (e) {}
       }
 
-      // 2. FETCH KE GOOGLE APPS SCRIPT DI LATAR BELAKANG
-      // Batas waktu 30 detik untuk mengakomodasi Cold Start server Google
+      // 2. FETCH KE GOOGLE APPS SCRIPT DI BACKGROUND
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      const timeoutId = setTimeout(() => controller.abort(), 25000);
 
       try {
         const response = await fetch(`${APPS_SCRIPT_URL}?api=true`, {
@@ -414,7 +441,6 @@
 
         if (incomingData && incomingData.length > 0) {
           globalData = incomingData;
-          // Simpan ke localStorage agar kunjungan berikutnya langsung instan
           localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: globalData }));
           renderCards();
           setTimeout(() => { 
@@ -427,14 +453,14 @@
         clearTimeout(timeoutId);
         console.error("Gagal sinkron data:", error);
         
-        // Tampilkan peringatan HANYA jika memori lokal benar-benar kosong
+        // Hanya tampilkan pesan jika di browser belum ada data sama sekali
         const container = document.getElementById('cards-container');
         if (container && (!globalData || globalData.length === 0)) {
           container.innerHTML = `
             <div class="participant-card text-center py-5 text-danger col-12">
               <i class="fas fa-exclamation-triangle mb-2" style="font-size: 1.5rem;"></i>
-              <div class="fw-bold mb-1">Server Google sedang bangun...</div>
-              <div class="small text-muted mb-3">Silakan klik tombol di bawah untuk mencoba kembali.</div>
+              <div class="fw-bold mb-1">Server Google sedang menyiapkan data...</div>
+              <div class="small text-muted mb-3">Silakan klik tombol di bawah untuk memuat ulang.</div>
               <button class="btn btn-sm btn-dark rounded-pill px-4" onclick="fetchApiData(true)">
                 <i class="fas fa-sync-alt me-1"></i> Muat Ulang
               </button>
