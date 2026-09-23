@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <base target="_top">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Transparansi Dana Ziaroh Wali 5 KKI</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -33,6 +34,12 @@
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     
+    html {
+      background-color: #f6f8fb;
+      min-height: 100%;
+      overscroll-behavior-y: none;
+    }
+
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg-base);
@@ -40,13 +47,16 @@
         radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.06) 0%, transparent 40%),
         radial-gradient(circle at 90% 15%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
         radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
-      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
       color: var(--text-main);
       margin: 0;
       padding: 0;
-      padding-bottom: 110px;
+      padding-bottom: calc(130px + env(safe-area-inset-bottom, 20px));
       min-height: 100vh;
+      min-height: 100dvh;
       overflow-x: hidden;
+      overscroll-behavior-y: none;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -220,9 +230,7 @@
     }
     .btn-wa-action:hover { background: var(--emerald); border-color: var(--emerald); color: #ffffff; }
 
-    /* =========================================
-       SKELETON SHIMMER LOADING (UX MODERN)
-       ========================================= */
+    /* SKELETON SHIMMER LOADING */
     .skeleton-card {
       background: rgba(255, 255, 255, 0.55);
       border: 1px solid rgba(226, 232, 240, 0.8);
@@ -244,10 +252,10 @@
       100% { background-position: -200% 0; }
     }
 
-    /* DOCK */
+    /* LIQUID GLASS DOCK */
     .liquid-dock-wrapper { 
       position: fixed; 
-      bottom: 20px; 
+      bottom: calc(15px + env(safe-area-inset-bottom, 0px)); 
       left: 0; right: 0; 
       display: flex; 
       justify-content: center; 
@@ -365,7 +373,6 @@
 
     <!-- RESPONSIVE CARDS CONTAINER (DEFAULT: SKELETON CARDS) -->
     <div id="cards-container" class="cards-grid">
-      <!-- 6 Skeleton Cards langsung tampil saat web terbuka -->
       <div class="skeleton-card"><div class="skeleton-line" style="width: 35%;"></div><div class="skeleton-line" style="width: 70%; height: 20px;"></div><div class="skeleton-line" style="height: 60px;"></div></div>
       <div class="skeleton-card"><div class="skeleton-line" style="width: 40%;"></div><div class="skeleton-line" style="width: 65%; height: 20px;"></div><div class="skeleton-line" style="height: 60px;"></div></div>
       <div class="skeleton-card"><div class="skeleton-line" style="width: 30%;"></div><div class="skeleton-line" style="width: 75%; height: 20px;"></div><div class="skeleton-line" style="height: 60px;"></div></div>
@@ -391,9 +398,7 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQe5Nm70lQBXLiIA7V35pAp-oYhXkjPObEGhFxd-nkb8aLx8Dsz5R78lk6mSz-jp4Pzg/exec";
     const WA_BENDAHARA = "6282131652906";
-
     const CACHE_KEY = "ziarah_peserta_cache";
     const PINNED_KEY = "ziarah_pinned_nama";
 
@@ -409,66 +414,57 @@
     let globalData = [];
     let isFilterDataSayaActive = false;
 
-    // --- FETCH DATA CEPAT DENGAN SWR (STALE WHILE REVALIDATE) ---
-    async function fetchApiData(forceRefresh = false) {
+    // --- FETCH DATA NATIVE APPS SCRIPT DENGAN SWR ---
+    function fetchApiData(forceRefresh = false) {
       const refreshIcon = document.getElementById('refreshIcon');
       if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-      // 1. CEK CACHE LOKAL: Tampilkan data langsung jika pernah buka sebelumnya (0.05 detik!)
+      // 1. Cek Cache Lokal Browser (Tampil instan 0.05 detik)
       const localCached = localStorage.getItem(CACHE_KEY);
       if (localCached && !forceRefresh) {
         try {
           const parsed = JSON.parse(localCached);
           if (parsed && parsed.data && parsed.data.length > 0) {
             globalData = parsed.data;
-            renderCards(); // Langsung ganti skeleton dengan data asli tanpa menunggu Google!
+            renderCards();
           }
         } catch (e) {}
       }
 
-      // 2. FETCH KE GOOGLE APPS SCRIPT DI BACKGROUND
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 25000);
-
-      try {
-        const response = await fetch(`${APPS_SCRIPT_URL}?api=true`, {
-          signal: controller.signal
-        });
-        clearTimeout(timeoutId);
-
-        const resData = await response.json();
-        const incomingData = Array.isArray(resData) ? resData : (resData.peserta ? resData.peserta : []);
-
-        if (incomingData && incomingData.length > 0) {
-          globalData = incomingData;
-          localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: globalData }));
-          renderCards();
-          setTimeout(() => { 
-            const notes = document.getElementById('notes-popup');
-            if (notes) notes.classList.add('show'); 
-          }, 600);
-        }
-
-      } catch (error) {
-        clearTimeout(timeoutId);
-        console.error("Gagal sinkron data:", error);
-        
-        // Hanya tampilkan pesan jika di browser belum ada data sama sekali
-        const container = document.getElementById('cards-container');
-        if (container && (!globalData || globalData.length === 0)) {
-          container.innerHTML = `
-            <div class="participant-card text-center py-5 text-danger col-12">
-              <i class="fas fa-exclamation-triangle mb-2" style="font-size: 1.5rem;"></i>
-              <div class="fw-bold mb-1">Tunggu bentar ya..Server Google sedang dibangunkan untuk menyiapkan data...</div>
-              <div class="small text-muted mb-3">Silakan klik tombol di bawah untuk memuat ulang dan tunggu max 10 detik.</div>
-              <button class="btn btn-sm btn-dark rounded-pill px-4" onclick="fetchApiData(true)">
-                <i class="fas fa-sync-alt me-1"></i> Muat Ulang
-              </button>
-            </div>`;
-        }
-      } finally {
-        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-      }
+      // 2. Ambil data langsung dari Google Apps Script
+      google.script.run
+        .withSuccessHandler(function(resData) {
+          if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+          
+          const incomingData = Array.isArray(resData) ? resData : (resData.peserta ? resData.peserta : []);
+          if (incomingData && incomingData.length > 0) {
+            globalData = incomingData;
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: globalData }));
+            renderCards();
+            setTimeout(() => { 
+              const notes = document.getElementById('notes-popup');
+              if (notes) notes.classList.add('show'); 
+            }, 600);
+          }
+        })
+        .withFailureHandler(function(error) {
+          if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+          console.error("Gagal sinkron data:", error);
+          
+          const container = document.getElementById('cards-container');
+          if (container && (!globalData || globalData.length === 0)) {
+            container.innerHTML = `
+              <div class="participant-card text-center py-5 text-danger col-12">
+                <i class="fas fa-exclamation-triangle mb-2" style="font-size: 1.5rem;"></i>
+                <div class="fw-bold mb-1">Server Google sedang menyiapkan data...</div>
+                <div class="small text-muted mb-3">Silakan klik tombol di bawah untuk memuat ulang.</div>
+                <button class="btn btn-sm btn-dark rounded-pill px-4" onclick="fetchApiData(true)">
+                  <i class="fas fa-sync-alt me-1"></i> Muat Ulang
+                </button>
+              </div>`;
+          }
+        })
+        .getPublicData();
     }
 
     // --- DOCK ACTIONS ---
